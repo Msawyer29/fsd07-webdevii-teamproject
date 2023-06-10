@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@*": ["./*"] // Mac removed the "/" after "@" like in the tutorial
     }
   }
 }

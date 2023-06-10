@@ -1,20 +1,25 @@
 import '@styles/globals.css';
-import { Html } from 'next/document';
 
 export const metadata = {
     title: "The Hive",
     description: 'Crowdfunding Platform for Creative Projects'
 }
 
-const layout = () => {
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
         <body>
-            <div></div>
+            <div className="main">
+                <div className="gradient" />
+            </div>
+
+            <main className="app">
+                {children}
+            </main>
         </body>
 
     </html>
   )
 }
 
-export default layout
+export default RootLayout;
