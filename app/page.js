@@ -2,6 +2,8 @@ import Image from "next/image";
 import Register from "../components/register";
 import { DeleteUser } from "../components/deleteUser";
 import GetAllUser from "../components/getAllUsers";
+import GetUserByEmail from "@components/getUserByEmail";
+import { UpdateUser } from "@components/updateUser";
 
 const Home = () => (
   <section className="container-fluid">
@@ -21,9 +23,16 @@ const Home = () => (
     <h2 className="text-center">List of Users</h2>
     <GetAllUser />
     <hr />
+    <h2 className="text-center">
+      List of User By Email (Email is hardcoded for now)
+    </h2>
+    <GetUserByEmail />
+    <hr />
     <Register />
     <hr />
     <DeleteUser />
+    <hr />
+    <UpdateUser />
   </section>
 );
 
