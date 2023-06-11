@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <nav className="container-fluid navBar d-flex align-items-center justify-content-between">
       <div>
-        <img src="/assets/icons/logo.png" alt="logo" className="logo" />
+        <img src="/assets/icons/logo.svg" alt="logo" className="logo" />
         <h2 className="m-auto">The Hive</h2>
       </div>
       <div className="d-flex align-items-center">

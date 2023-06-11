@@ -29,8 +29,7 @@ const SignUp = () => {
     //TODO Validation
     createUserWithEmailAndPassword(auth, email, password)
       .then((cred) => {
-        console.log("user created :", cred.user);
-        console.log("form need to refresh now");
+        console.log("user created :", cred.user);        
         //TODO ResetForm
         setValues({
           email: "",
