@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/globals.css";
+import Navbar from "@components/navbar";
 //import "bootstrap/dist/js/bootstrap.bundle.min.js";
 export const metadata = {
   title: "The Hive",
@@ -16,6 +18,9 @@ const RootLayout = ({ children }) => {
         ></script>
       </head>
       <body>
+        <header>
+          <Navbar />
+        </header>
         <div className="main">
           <div className="gradient" />
         </div>
