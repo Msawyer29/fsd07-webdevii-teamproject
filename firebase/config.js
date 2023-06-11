@@ -27,9 +27,7 @@ let firebase_app =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 // Get a Firebase Auth instance
-const auth = getAuth();
+// const auth = getAuth();
 
 export default firebase_app;
-export { auth };
-
-
+// export { auth };

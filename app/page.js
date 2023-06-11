@@ -4,6 +4,7 @@ import { DeleteUser } from "../components/deleteUser";
 import GetAllUser from "../components/getAllUsers";
 import GetUserByEmail from "@components/getUserByEmail";
 import { UpdateUser } from "@components/updateUser";
+import SignUp from "@components/signUp";
 
 const Home = () => (
   <section className="container-fluid">
@@ -20,12 +21,10 @@ const Home = () => (
       commodo consequat.{" "}
     </p>
     <hr />
-    <h2 className="text-center">List of Users</h2>
+    <h2>List of Users</h2>
     <GetAllUser />
     <hr />
-    <h2 className="text-center">
-      List of User By Email (Email is hardcoded for now)
-    </h2>
+    <h2>List of User By Email (Email is hardcoded for now)</h2>
     <GetUserByEmail />
     <hr />
     <Register />
@@ -33,6 +32,9 @@ const Home = () => (
     <DeleteUser />
     <hr />
     <UpdateUser />
+    <hr />
+    <h2>Firebase Auth SignUp</h2>
+    <SignUp />
   </section>
 );
 
