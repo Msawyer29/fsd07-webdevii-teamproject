@@ -40,20 +40,24 @@
   background-color: #ffe66d;
 }
 
-
 /* ----------------- TYPOGRAPHY ---------------------- */
 
 body p {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-h1, h2 , h3 ,h4, h5, h6 {
-  font-family: 'Archivo', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Archivo", sans-serif;
   font-weight: 700;
 }
 
 .nav-link {
-  font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
   font-weight: 700;
 }
 
@@ -61,9 +65,9 @@ h1, h2 , h3 ,h4, h5, h6 {
 
 .btn-outline-secondary {
   border-color: #4ecdc4 !important;
-  border-width: 2px ;
+  border-width: 2px;
   color: #4ecdc4 !important;
-  font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
   font-weight: 700;
   letter-spacing: 2px;
 }
@@ -82,10 +86,9 @@ h1, h2 , h3 ,h4, h5, h6 {
 .carousel-indicators {
   position: relative;
   bottom: -25px;
- 
 }
 .carousel-indicators [data-bs-target] {
-  width:45px;
+  width: 45px;
   height: 5px;
 }
 
@@ -93,4 +96,3 @@ h1, h2 , h3 ,h4, h5, h6 {
 a {
   text-decoration: none;
 }
-
