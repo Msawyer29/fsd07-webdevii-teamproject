@@ -40,19 +40,15 @@
   background-color: #ffe66d;
 }
 
+
 /* ----------------- TYPOGRAPHY ---------------------- */
 
 body p {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Archivo", sans-serif;
+h1, h2 , h3 ,h4, h5, h6 {
+  font-family: 'Archivo', sans-serif;
   font-weight: 700;
 }
 
@@ -61,7 +57,7 @@ h6 {
 }
 
 .nav-link {
-  font-family: "Archivo", sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-weight: 700;
 }
 
@@ -69,9 +65,9 @@ h6 {
 
 .btn-outline-secondary {
   border-color: #4ecdc4 !important;
-  border-width: 2px;
+  border-width: 2px ;
   color: #4ecdc4 !important;
-  font-family: "Archivo", sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-weight: 700;
   letter-spacing: 2px;
 }
@@ -90,9 +86,10 @@ h6 {
 .carousel-indicators {
   position: relative;
   bottom: -25px;
+ 
 }
 .carousel-indicators [data-bs-target] {
-  width: 45px;
+  width:45px;
   height: 5px;
 }
 
@@ -100,3 +97,48 @@ h6 {
 a {
   text-decoration: none;
 }
+
+
+/* ----------------- BOOTSTRAP ELEMENTS ---------------------- */
+.card {
+  width: 18rem;
+}
+
+.card-text {
+  height:72px;
+  overflow-y: hidden;
+}
+
+.progress {
+  height: 5px;
+}
+
+/* this will need to be set dynamically */
+.progress-bar {
+  width: 78% 
+}
+
+/* ----------------- CUSTOM ELEMENTS ---------------------- */
+
+.myBtnEgg {
+  border: 2px solid;
+  transition: all 0.5s;
+  transition-timing-function: ease-out;
+  border-color: #f7fff7;
+  background-color: none;
+  color: #f7fff7;
+  padding: 7px;
+  font-family: 'Archivo', sans-serif;
+  text-transform: uppercase;
+}
+
+.myBtnEgg:hover {
+  background-color: #f7fff7;
+  color: #1a535c;
+}
+
+.avatar {
+  max-width: 50px;
+  border-radius: 50%;
+}
+

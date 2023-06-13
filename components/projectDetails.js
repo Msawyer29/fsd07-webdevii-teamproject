@@ -8,7 +8,7 @@ const ProjectDetails = () => {
         <div className="col-md-8 px-3">
           <img
             src="/assets/images/together.jpg"
-            classNam="img-fluid"
+            className="img-fluid"
             alt="..."
           />
           <ProjectDescription />
@@ -26,13 +26,27 @@ const ProjectDetails = () => {
           >
             <div className="progress-bar greenBG"></div>
           </div>
-          <h1 className="egg slim mb-0">$<span id="funds">12.800</span></h1>
-          <p className="green mt-0">pledged of <strong>CA$ <span id="goal">15.000</span></strong> goal</p>
-          <h1 className="egg slim mb-0" id="backers">193</h1>
+          <h1 className="egg slim mb-0">
+            $<span id="funds">12.800</span>
+          </h1>
+          <p className="green mt-0">
+            pledged of{" "}
+            <strong>
+              CA$ <span id="goal">15.000</span>
+            </strong>{" "}
+            goal
+          </p>
+          <h1 className="egg slim mb-0" id="backers">
+            193
+          </h1>
           <p className="green mt-0">backers</p>
-          <h1 className="egg slim mb-0" id="deadline">21</h1>
+          <h1 className="egg slim mb-0" id="deadline">
+            21
+          </h1>
           <p className="green mt-0 mb-5">days left</p>
-          <a href="#" className="myBtnEgg">back this project</a>
+          <a href="#" className="myBtnEgg">
+            back this project
+          </a>
         </div>
       </div>
     </div>

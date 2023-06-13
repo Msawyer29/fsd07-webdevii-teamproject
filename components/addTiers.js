@@ -10,6 +10,7 @@ function AddTiers() {
       reward: "",
     };
     initRow([...rows, data]);
+    console.log(initRow);
   };
   const tableRowRemove = (index) => {
     const dataRow = [...rows];

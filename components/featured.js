@@ -5,7 +5,7 @@ const Featured = () => {
   return (
     <div className="mb-5">
       <h6 className="egg text-uppercase mt-5 mb-3">featured projects</h6>
-      <div id="carouselExample" class="carousel slide">
+      <div id="carouselExample" className="carousel slide">
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex">
