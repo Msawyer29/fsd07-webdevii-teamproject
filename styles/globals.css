@@ -52,6 +52,10 @@ h1, h2 , h3 ,h4, h5, h6 {
   font-weight: 700;
 }
 
+.slim {
+  font-weight: 400 !important;
+}
+
 .nav-link {
   font-family: 'Archivo', sans-serif;
   font-weight: 700;
@@ -92,5 +96,49 @@ h1, h2 , h3 ,h4, h5, h6 {
 /* ----------------- HTML ELEMENTS ---------------------- */
 a {
   text-decoration: none;
+}
+
+
+/* ----------------- BOOTSTRAP ELEMENTS ---------------------- */
+.card {
+  width: 18rem;
+}
+
+.card-text {
+  height:72px;
+  overflow-y: hidden;
+}
+
+.progress {
+  height: 5px;
+}
+
+/* this will need to be set dynamically */
+.progress-bar {
+  width: 78% 
+}
+
+/* ----------------- CUSTOM ELEMENTS ---------------------- */
+
+.myBtnEgg {
+  border: 2px solid;
+  transition: all 0.5s;
+  transition-timing-function: ease-out;
+  border-color: #f7fff7;
+  background-color: none;
+  color: #f7fff7;
+  padding: 7px;
+  font-family: 'Archivo', sans-serif;
+  text-transform: uppercase;
+}
+
+.myBtnEgg:hover {
+  background-color: #f7fff7;
+  color: #1a535c;
+}
+
+.avatar {
+  max-width: 50px;
+  border-radius: 50%;
 }
 

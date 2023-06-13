@@ -62,7 +62,14 @@ const Navbar = () => {
             find
           </button>
         </div>
-
+        <a
+          href="#"
+          className="nav-link me-3"
+          data-bs-toggle="modal"
+          data-bs-target="#register"
+        >
+          Register
+        </a>
         <a href="#" className="nav-link me-3" onClick={handleLogout}>
           Logout
         </a>
@@ -72,23 +79,23 @@ const Navbar = () => {
           href="#"
           className="nav-link"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#login"
         >
           Login
         </a>
 
-        {/* Model */}
+        {/* Modal */}
         <div
           className="modal fade"
-          id="exampleModal"
+          id="login"
           tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
+          aria-labelledby="loginLabel"
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title dGreen" id="exampleModalLabel">
+                <h5 className="modal-title dGreen" id="loginLabel">
                   Login Form
                 </h5>
                 <button

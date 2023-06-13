@@ -12,7 +12,7 @@ const Featured = () => {
               <div className="col-md-8 px-3">
                 <img
                   src="/assets/images/together.jpg"
-                  classNam="img-fluid"
+                  className="img-fluid"
                   alt="..."
                 />
               </div>

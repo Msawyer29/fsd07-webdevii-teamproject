@@ -15,6 +15,9 @@ const Successful = () => {
             projects
           </h1>
         </div>
+
+                                        {/* DELETE BELOW */}
+
         <div className="col-md-3">
           <img
             src="/assets/images/together.jpg"
@@ -39,6 +42,9 @@ const Successful = () => {
           />
           <div className="eggBG dGreen p-2 m-0"><strong>Project Title &#8594;</strong></div> 
         </div>
+
+                                          {/* DELETE ABOVE */}
+
       </div>
     </div>
   );

@@ -4,9 +4,9 @@ import React, { useState, useRef } from "react";
 const Categories = () => {
     return (
 <div className="mt-5">
-<h1 className="text-center green">
+{/* <h1 className="text-center green">
       Explore Categories
-      </h1>
+      </h1> */}
 <hr className="green" />
 
 <ul id="categories" className="nav justify-content-center">
