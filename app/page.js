@@ -9,6 +9,7 @@ import Categories from "@components/categories";
 import Featured from "@components/featured";
 import Successful from "@components/successful";
 import Discover from "@components/discover";
+import AddProject from "../components/addProject";
 
 const Home = () => (
   <div className="container px-5">
@@ -16,6 +17,7 @@ const Home = () => (
     <Featured />
     <Successful />
     <Discover />
+    <AddProject />
     {/* DELETE BELOW WHEN READY */}
 
     {/* <h2>List of Users</h2>
