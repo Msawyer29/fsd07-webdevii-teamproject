@@ -37,7 +37,6 @@ const Navbar = () => {
     <nav className="container-fluid navBar d-flex align-items-center justify-content-between">
       <div>
         <img src="/assets/icons/logo.png" alt="logo" className="logo" />
-        <h2 className="m-auto">The Hive</h2>
       </div>
       <div className="d-flex align-items-center">
         <button className="btn btn-danger mx-2" onClick={handleLogout}>
