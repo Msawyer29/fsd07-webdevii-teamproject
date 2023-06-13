@@ -34,10 +34,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between">
+    <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between py-2">
       <div>
-        <img src="/assets/icons/logo.png" alt="logo" className="logo" />
-        <h2 className="m-auto">The Hive</h2>
+        <img src="/assets/icons/logo.svg" alt="logo" id="logo" />
       </div>
 
       <div className="d-flex align-items-center me-3">
@@ -62,7 +61,14 @@ const Navbar = () => {
             find
           </button>
         </div>
-
+        <a
+          href="#"
+          className="nav-link me-3"
+          data-bs-toggle="modal"
+          data-bs-target="#register"
+        >
+          Register
+        </a>
         <a href="#" className="nav-link me-3" onClick={handleLogout}>
           Logout
         </a>
@@ -72,23 +78,23 @@ const Navbar = () => {
           href="#"
           className="nav-link"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#login"
         >
           Login
         </a>
 
-        {/* Model */}
+        {/* Modal */}
         <div
           className="modal fade"
-          id="exampleModal"
+          id="login"
           tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
+          aria-labelledby="loginLabel"
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title dGreen" id="exampleModalLabel">
+                <h5 className="modal-title dGreen" id="loginLabel">
                   Login Form
                 </h5>
                 <button
