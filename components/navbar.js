@@ -34,10 +34,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between">
+    <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between py-2">
       <div>
-        <img src="/assets/icons/logo.png" alt="logo" className="logo" />
-        <h2 className="m-auto">The Hive</h2>
+        <img src="/assets/icons/logo.svg" alt="logo" id="logo" />
       </div>
 
       <div className="d-flex align-items-center me-3">
