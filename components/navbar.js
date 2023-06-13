@@ -45,16 +45,16 @@ const Navbar = () => {
             start a project
           </a>
         </div>
-        <div class="input-group me-3">
+        <div className="input-group me-3">
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="search"
             aria-label="search"
             aria-describedby="button-addon2"
           />
           <button
-            class="btn btn-outline-secondary"
+            className="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
           >
