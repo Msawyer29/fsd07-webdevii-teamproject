@@ -34,24 +34,48 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="container-fluid navBar d-flex align-items-center justify-content-between">
+    <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between">
       <div>
         <img src="/assets/icons/logo.png" alt="logo" className="logo" />
+        <h2 className="m-auto">The Hive</h2>
       </div>
-      <div className="d-flex align-items-center">
-        <button className="btn btn-danger mx-2" onClick={handleLogout}>
-          LogOut
-        </button>
+
+      <div className="d-flex align-items-center me-3">
+        <div className="w-50">
+          <a className="nav-link" href="#">
+            start a project
+          </a>
+        </div>
+        <div class="input-group me-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="search"
+            aria-label="search"
+            aria-describedby="button-addon2"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+          >
+            find
+          </button>
+        </div>
+
+        <a href="#" className="nav-link me-3" onClick={handleLogout}>
+          Logout
+        </a>
         {/* ------------------------- */}
         {/* <!-- Button trigger modal --> */}
-        <button
-          type="button"
-          className="btn btn-success"
+        <a
+          href="#"
+          className="nav-link"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
           Login
-        </button>
+        </a>
 
         {/* Model */}
         <div
@@ -61,10 +85,10 @@ const Navbar = () => {
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
+                <h5 className="modal-title dGreen" id="exampleModalLabel">
                   Login Form
                 </h5>
                 <button
@@ -90,7 +114,6 @@ const Navbar = () => {
         {/* <button className="btn btn-success mx-2" onClick={handleLogin}>
           Login
         </button> */}
-        <h5 className="mx-2">Menu goes here</h5>
       </div>
     </nav>
   );
