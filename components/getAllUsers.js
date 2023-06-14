@@ -19,6 +19,7 @@ function GetAllUser() {
   //---------------------------------
   useEffect(() => {
     const usersDetails = onSnapshot(colRef, (snapshot) => {
+      console.log(snapshot.docs);
       snapshot.docs.forEach((doc) => {
         userArray.push({ ...doc.data(), id: doc.id });
       });

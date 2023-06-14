@@ -104,42 +104,5 @@ const Register = () => {
   );
 };
 
-// const DeleteUser = () => {
-//   const deleteForm = useRef(null);
-//   const collectionName = "users";
-//   const db = getFirestore();
-//   const colRef = collection(db, collectionName);
-//   //console.log(deleteForm.id.defaultValue);
-//   const handleDelete = () => {
-//     //e.preventDefault();
-//     console.log("I am here");
-//     //console.log(deleteForm.values);
-//   };
-
-//   // const docRef = doc(db, collectionName, deleteForm.id.value);
-//   // deleteDoc(docRef).then(() => {
-//   //   console.log("Reset form");
-//   // });
-
-//   return (
-//     <div className="container">
-//       <h2>Delete User for testing only</h2>
-//       <form className="col-6" onSubmit={handleDelete}>
-//         <input
-//           type="text"
-//           className="form-control mb-3"
-//           id="id"
-//           ref={deleteForm}
-//           placeholder="UserId"
-//           defaultValue={"abcd"}
-//         />
-//         <button type="submit" className="btn btn-danger my-2">
-//           Delete User
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
 export default Register;
 // export { DeleteUser };

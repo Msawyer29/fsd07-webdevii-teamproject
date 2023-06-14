@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps } from "firebase/app";
+import { getStorage } from "firebase/storage";
 // import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
@@ -25,6 +26,7 @@ const firebaseConfig = {
 // Initialize Firebase
 let firebase_app =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const firebaseStorage = getStorage(firebase_app);
 
 // Get a Firebase Auth instance
 // const auth = getAuth();
@@ -33,7 +35,8 @@ export default firebase_app;
 // export { auth };
 
 // Stripe API configuration
-import Stripe from 'stripe';
+import Stripe from "stripe";
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2022-11-15',
+  apiVersion: "2022-11-15",
 });
+export { firebaseStorage };
