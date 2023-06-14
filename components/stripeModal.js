@@ -25,6 +25,7 @@ const StripeModal = () => {
     const handleHidden = () => {
       setModalKey(modalKey + 1); // increase modalKey by 1, this refreshes ChekoutForm by creating a new instance of it when modal is closed/hidden
       setPaymentSuccess(false); // reset paymentSuccess when the modal is closed
+      setPaymentError(null); // reset paymentError when the modal is closed
     };
     // event listener for the "hidden.bs.modal" event is attached to the modal element
     // this ensures that the handleHidden function (which increments modalKey) is called every time the modal is closed
