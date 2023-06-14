@@ -1,5 +1,31 @@
 import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
+import firebase_app from "/firebase/config";
+
+// Get a Firestore instance
+const db = getFirestore(firebase_app);
+
+// addContribution function adds a new document to the 'contributions' collection - projectId and amount are hardcoded
+// this function will be called when the payment is successful
+const addContribution = async (userId, paymentIntent) => {
+  try {
+    const docRef = await addDoc(collection(db, "projects", "VHnRNxsVmoxDJpu3YpEd", "contributions"), {
+      amount: 10,
+      contributorId: userId,
+      date: Timestamp.fromDate(new Date()),
+      paymentDetails: {
+        status: paymentIntent.status,
+        transactionId: paymentIntent.id
+      }
+    });
+
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
 
 const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure onPaymentSuccess & onPaymentError from props (passed as a prop form stripeModal component)
   // useStripe and useElements are hooks provided by Stripe to access the stripe object and card element respectively
@@ -53,7 +79,19 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment processed successfully");
         setPaymentCompleted(true); // setting the paymentCompleted to true disables the Pay button after successful payment
-        onPaymentSuccess(); // call the passed in function from stripeModal when payment is successful
+        // get the userId from the authenticated user logged into the session
+        const auth = getAuth();
+        const userId = auth.currentUser ? auth.currentUser.uid : null;
+        if (userId) {
+          addContribution(userId, result.paymentIntent); // the addContribution function is called
+        } else {
+          console.error("No user is currently signed in");
+        }
+        
+        // Call the onPaymentSuccess callback - call the passed in function from stripeModal when payment is successful
+        if (onPaymentSuccess) {
+          onPaymentSuccess();
+        }
       }
       setProcessing(false); // enables the pay button again after successful processing
     }
