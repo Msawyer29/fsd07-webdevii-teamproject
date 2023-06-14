@@ -1,4 +1,17 @@
 "use client";
+
+// maybe delete down
+
+
+
+import { loadStripe } from "@stripe/stripe-js";
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe("pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA");
+
+// maybe delete up
+
 import StripeModalButton from "./stripeModalButton";
 import StripeModal from "./stripeModal";
 

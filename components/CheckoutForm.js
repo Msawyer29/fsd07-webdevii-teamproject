@@ -41,15 +41,15 @@ const CheckoutForm = () => {
       }
     }
   };
+  
 
   return (
     <div id="form">
     <form onSubmit={handleSubmit}>
       <CardElement />
-      <div className="d-flex justify-content-center">
-      <a className="btn btn-primary mt-3 " type="submit" disabled={!stripe}>
+      <button className="btn btn-primary mt-3 " type="submit" disabled={!stripe}>
         Pay
-      </a></div>
+      </button>
     </form>
     </div>
   );
