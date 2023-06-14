@@ -32,6 +32,7 @@ const RootLayout = ({ children }) => {
         </div>
 
         <main className="app">{children}</main>
+        
       </body>
     </html>
   );

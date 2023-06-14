@@ -8,6 +8,8 @@ import {
   onSnapshot,
   query,
   where,
+  limit,
+  orderBy,
 } from "firebase/firestore";
 import UserRow from "./userRow";
 

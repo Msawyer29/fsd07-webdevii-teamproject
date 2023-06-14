@@ -29,8 +29,9 @@ const AddProject = () => {
     startDate: "",
     tiers: [{ minContribution: "", reward: "" }],
   });
+  const [tiers, setTiers] = useState(values.tiers);
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageUrls, setImageUrls] = useState([]);
+  //const [imageUrls, setImageUrls] = useState([]);
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -52,7 +53,7 @@ const AddProject = () => {
     values.tiers = tiers;
     let userUID = getAuth().currentUser.uid;
 
-    console.log(userUID);
+    //console.log(userUID);
 
     //first upload image then submit data
 
@@ -62,37 +63,39 @@ const AddProject = () => {
     const imageRef = ref(firebaseStorage, `images/${imageUpload.name + v4()}`);
     values.createrId = userUID;
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      // getDownloadURL(snapshot.ref).then((url) => {
-      //   setImageUrls((prev) => [...prev, url]);
-      // });
-
-      //------------------ submit data now
-      values.image = `images/${imageUpload.name + v4()}`;
-      addDoc(colRef, values).then(() => {
-        console.log("form need to refresh now");
-        //TODO ResetForm
-        setValues({
-          title: "",
-          category: "",
-          description: "",
-          goal: "",
-          status: "",
-          startDate: "",
-          endDate: "",
-          createrId: "",
-          startDate: "",
-          image: "",
-          tiers: [{ minContribution: "", reward: "" }],
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          values.image = url;
+        })
+        .then(() => {
+          //------------------ submit data now
+          // values.image = `images/${imageUpload.name + v4()}`;
+          addDoc(colRef, values).then(() => {
+            console.log("form need to refresh now");
+            //TODO ResetForm
+            setValues({
+              title: "",
+              category: "",
+              description: "",
+              goal: "",
+              status: "",
+              startDate: "",
+              endDate: "",
+              createrId: "",
+              startDate: "",
+              image: "",
+              tiers: [{ minContribution: "", reward: "" }],
+            });
+            setTiers(values.tiers);
+            setImageUpload(null);
+          });
         });
-      });
     });
 
     // //TODO Validation
   };
 
   console.log(values);
-
-  const [tiers, setTiers] = useState(values.tiers);
 
   const addRowTable = (e) => {
     e.preventDefault();
