@@ -12,9 +12,8 @@ const CheckoutForm = () => {
     if (!stripe || !elements) {
       return;
     }
-
     setProcessing(true); // disables the pay button after submission
-
+    
     const response = await fetch("/api/create-payment-intent", {
       method: "POST",
       headers: {
@@ -44,12 +43,15 @@ const CheckoutForm = () => {
   };
 
   return (
+    <div id="form">
     <form onSubmit={handleSubmit}>
       <CardElement />
-      <button type="submit" disabled={!stripe}>
+      <div className="d-flex justify-content-center">
+      <a className="btn btn-primary mt-3 " type="submit" disabled={!stripe}>
         Pay
-      </button>
+      </a></div>
     </form>
+    </div>
   );
 };
 

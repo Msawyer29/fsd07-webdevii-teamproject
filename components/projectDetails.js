@@ -1,3 +1,8 @@
+"use client";
+import StripeModalButton from "./stripeModalButton";
+import StripeModal from "./stripeModal";
+
+
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
 const ProjectDetails = () => {
@@ -44,9 +49,12 @@ const ProjectDetails = () => {
             21
           </h1>
           <p className="green mt-0 mb-5">days left</p>
-          <a href="#" className="myBtnEgg">
-            back this project
-          </a>
+         
+         
+        <StripeModalButton />
+          <StripeModal />
+
+         
         </div>
       </div>
     </div>
