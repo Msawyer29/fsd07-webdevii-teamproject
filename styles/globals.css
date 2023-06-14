@@ -89,7 +89,7 @@ h6 {
 
 .carousel-indicators {
   position: relative;
-  bottom: -25px;
+  bottom: -515px;
 }
 .carousel-indicators [data-bs-target] {
   width: 45px;
@@ -120,6 +120,11 @@ a {
   width: 78%;
 }
 
+.form-control:focus {
+  border-color:#1a535c;
+  box-shadow:0 0 0 0.25rem rgba(78, 205, 196,.50);
+}
+
 /* ----------------- CUSTOM ELEMENTS ---------------------- */
 
 .myBtnEgg {
@@ -142,4 +147,8 @@ a {
 .avatar {
   max-width: 50px;
   border-radius: 50%;
+}
+
+.spacer {
+  min-height: 50px;
 }

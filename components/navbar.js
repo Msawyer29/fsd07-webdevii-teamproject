@@ -65,7 +65,7 @@ const Navbar = () => {
           href="#"
           className="nav-link me-3"
           data-bs-toggle="modal"
-          data-bs-target="#register"
+          data-bs-target="#signUp"
         >
           Register
         </a>

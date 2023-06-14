@@ -46,6 +46,7 @@ const CheckoutForm = () => {
   return (
     <div id="form">
     <form onSubmit={handleSubmit}>
+      
       <CardElement />
       <button className="btn btn-primary mt-3 " type="submit" disabled={!stripe}>
         Pay

@@ -103,9 +103,17 @@ const SignUp = () => {
 
   //---------------------------------
   return (
-    <div className="container">
-      <h2>SignUp Form</h2>
-      <form className="col-6" onSubmit={handleSubmit} ref={signUpForm}>
+    
+
+<div className="modal fade" id="signUp" tabIndex="-1" aria-labelledby="signUpLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="modal-title dGreen fs-5" id="signUpLabel">Sign Up</h1>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+      <form onSubmit={handleSubmit} ref={signUpForm}>
         <input
           type="text"
           className="form-control mb-3"
@@ -156,7 +164,15 @@ const SignUp = () => {
           <button className="btn btn-primary my-2">Submit</button>
         </div>
       </form>
+      </div>
+      
     </div>
+  </div>
+</div>
+
+     
+      
+   
   );
 };
 export default SignUp;

@@ -30,7 +30,7 @@ const ProjectDetails = () => {
             alt="..."
           />
           <ProjectDescription />
-          <Comments />
+         
         </div>
         <div className="col-md-4 px-3">
           <p className="text-uppercase egg">stats</p>
@@ -70,6 +70,7 @@ const ProjectDetails = () => {
          
         </div>
       </div>
+      <Comments />
     </div>
   );
 };
