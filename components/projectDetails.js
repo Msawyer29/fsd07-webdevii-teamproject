@@ -1,3 +1,21 @@
+"use client";
+
+// maybe delete down
+
+
+
+import { loadStripe } from "@stripe/stripe-js";
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe("pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA");
+
+// maybe delete up
+
+import StripeModalButton from "./stripeModalButton";
+import StripeModal from "./stripeModal";
+
+
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
 const ProjectDetails = () => {
@@ -44,9 +62,12 @@ const ProjectDetails = () => {
             21
           </h1>
           <p className="green mt-0 mb-5">days left</p>
-          <a href="#" className="myBtnEgg">
-            back this project
-          </a>
+         
+         
+        <StripeModalButton />
+          <StripeModal />
+
+         
         </div>
       </div>
     </div>

@@ -1,0 +1,196 @@
+// components/Contribution.js
+"use client";
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { cardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { stripe } from "../firebase/config";
+import { addContribution } from "../firebase/addData";
+
+// card element styling
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      color: "#32325d",
+      fontFamily: "Arial, sans-serif",
+      fontSmoothing: "antialiased",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#32325d",
+      },
+    },
+    invalid: {
+      color: "#fa755a",
+      iconColor: "#fa755a",
+    },
+  },
+};
+
+function CardSection() {
+  return (
+    <div>
+      <cardElement options={CARD_ELEMENT_OPTIONS} />
+    </div>
+  );
+}
+
+export default function Contribution({ projectId, contributorId }) {
+  const [amount, setAmount] = useState(0);
+  const stripe = useStripe();
+  const elements = useElements();
+
+  // initialize Stripe with your publishable key
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
+
+  const processPayment = async (event) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
+
+    const card = elements.getElement(cardElement);
+
+    const tokenResult = await stripe.createToken(card);
+
+    if (tokenResult.error) {
+      // Inform the user if there was an error
+      console.log(tokenResult.error.message);
+    } else {
+      // Send the token to your server
+      stripeTokenHandler(tokenResult.token);
+    }
+
+    // Create a new Checkout Session using the server-side endpoint you're going to create
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: amount, // Use a proper calculation for cents
+        projectId: projectId,
+        contributorId: contributorId,
+      }),
+    });
+
+    const session = await response.json();
+
+    // Redirect user to Stripe Checkout
+    const checkoutResult = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (checkoutResult.error) {
+      // If redirectToCheckout fails due to a browser or network error, display the localized error message to your customer
+      alert(checkoutResult.error.message);
+    }
+  };
+
+  return (
+    <form onSubmit={processPayment}>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter amount"
+        required
+      />
+      <CardSection />
+      <button type="submit">Contribute</button>
+    </form>
+  );
+}
+
+// Render Contribution component with Elements provider
+export function Contribution() {
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
+  return (
+    <Elements stripe={stripePromise}>
+      <Contribution />
+    </Elements>
+  );
+}
+
+export async function handler(req, res) {
+  // Check the HTTP method of the request
+  switch (req.method) {
+    case "POST": {
+      // If it's a POST request, we process the payment
+      const { amount, projectId, contributorId } = req.body;
+
+      try {
+        // Create a new checkout session
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items: [
+            {
+              price_data: {
+                currency: "usd",
+                product_data: {
+                  name: "Project Contribution",
+                },
+                unit_amount: amount * 100, // convert to cents, Stripe API payments are stored in db as cents
+              },
+              quantity: 1,
+            },
+          ],
+          mode: "payment",
+          success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${req.headers.origin}/cancelled`,
+        });
+
+        // Save contribution in Firebase
+        await addContribution({
+          id: session.id,
+          amount,
+          date: new Date().toISOString(),
+          projectId,
+          contributorId,
+          paymentDetail: {
+            stripeTransactionId: session.payment_intent,
+            status: "PENDING",
+          },
+        });
+
+        // Send the ID of the checkout session in the response
+        res.status(200).json({ id: session.id });
+      } catch (err) {
+        // If there's an error, respond with a 500 status code and an error message
+        res
+          .status(500)
+          .json({ error: "An error occurred, unable to process payment." });
+      }
+      break;
+    }
+
+    case "GET": {
+      // If it's a GET request, we retrieve the session information
+      const { sessionId } = req.query;
+
+      try {
+        // Retrieve the session
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+        // Send the session data in the response
+        res.status(200).json(session);
+      } catch (err) {
+        // If there's an error, respond with a 500 status code and an error message
+        res
+          .status(500)
+          .json({ error: "An error occurred, unable to retrieve session." });
+      }
+      break;
+    }
+
+    default:
+      // If the HTTP method isn't supported, respond with a 405 status code
+      res.setHeader("Allow", ["POST", "GET"]);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}

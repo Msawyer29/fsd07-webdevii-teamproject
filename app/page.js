@@ -18,6 +18,7 @@ const Home = () => (
     <Successful />
     <Discover />
     <AddProject />
+    <SignUp />
     {/* DELETE BELOW WHEN READY */}
 
     {/* <h2>List of Users</h2>
@@ -32,8 +33,8 @@ const Home = () => (
     <hr />
     <UpdateUser />
     <hr />
-    <h2>Firebase Auth SignUp</h2>
-    <SignUp /> */}
+    <h2>Firebase Auth SignUp</h2> */}
+    
   </div>
 );
 
