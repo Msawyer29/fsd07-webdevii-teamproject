@@ -9,9 +9,9 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import AddTiers from "./addTiers";
 
 const AddProject = () => {
+  // const addProjectForm = useRef(null);
   const [values, setValues] = useState({
     title: "",
     category: "",
@@ -22,6 +22,7 @@ const AddProject = () => {
     endDate: "",
     createrId: "",
     startDate: "",
+    tiers: [{ minContribution: "", reward: "" }],
   });
 
   const onChange = (e) => {
@@ -35,12 +36,12 @@ const AddProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
-    const projectData = Object.fromEntries(data.entries());
-    console.log(projectData);
-    //TODO Validation
-    addDoc(colRef, projectData).then(() => {
-      //console.log("form need to refresh now");
+    values.tiers = tiers;
+
+    //console.log(values);
+    // //TODO Validation
+    addDoc(colRef, values).then(() => {
+      console.log("form need to refresh now");
       //TODO ResetForm
       setValues({
         title: "",
@@ -52,14 +53,45 @@ const AddProject = () => {
         endDate: "",
         createrId: "",
         startDate: "",
+        tiers: [{ minContribution: "", reward: "" }],
       });
     });
   };
+
+  const [tiers, setTiers] = useState(values.tiers);
+
+  const addRowTable = (e) => {
+    e.preventDefault();
+
+    const newTier = {
+      minContribution: "",
+      reward: "",
+    };
+    setTiers([...tiers, newTier]);
+  };
+  //console.log(tiers);
+  //---------------------------------------
+  const tableRowRemove = (index, e) => {
+    e.preventDefault();
+    const dataRow = [...tiers];
+    dataRow.splice(index, 1);
+    setTiers(dataRow);
+  };
+  //--------------------------------------
+  const onValUpdate = (index, e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    const data = [...tiers];
+    data[index][name] = value;
+    setTiers(data);
+  };
+  //---------------------------------
+
   //---------------------------------
   return (
     <div className="container">
       <h2>Create Project</h2>
-      <form className="col-6" onSubmit={handleSubmit}>
+      <form className="col-6">
         <div className="d-flex">
           <label className="form-label col-4">Project Title</label>
           <input
@@ -69,8 +101,6 @@ const AddProject = () => {
             placeholder="Project Title"
             defaultValue={values.title}
             onChange={onChange}
-            // value={values.role}
-            // onChange={(e) => setValues({ ...values, role: e.target.value })}
           />
         </div>
         <div className="d-flex">
@@ -79,11 +109,9 @@ const AddProject = () => {
             type="text"
             className="form-control mb-3 col-8"
             name="category"
-            // ref={firstNameRef}
             placeholder="Category"
             value={values.category}
             onChange={onChange}
-            //onChange={(e) => setValues({ ...values, firstName: e.target.value })}
           />
         </div>
         <div className="d-flex">
@@ -96,7 +124,6 @@ const AddProject = () => {
             placeholder="Project description here .... "
             value={values.description}
             onChange={onChange}
-            //onChange={(e) => setValues({ ...values, lastName: e.target.value })}
           ></textarea>
         </div>
         <div className="d-flex">
@@ -139,21 +166,70 @@ const AddProject = () => {
             className="form-control mb-3 col-8"
             name="file"
             placeholder="Choose image ..."
-            // defaultValue={values.image}
-            // onChange={onChange}
           />
         </div>
 
         <div className="d-flex">
           <label className="form-label col-4">Tiers</label>
-          <AddTiers />
+          <div>
+            <table className="table table-striped col-12">
+              <thead>
+                <tr>
+                  <th className="col-3">Minimum Contribution</th>
+                  <th className="col-7">Reward</th>
+                  <th>
+                    <button
+                      className="btn btn-outline-primary btnTiers"
+                      onClick={addRowTable}
+                    >
+                      Add
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tiers.map((tier, index) => (
+                  <tr key={index}>
+                    <td>
+                      <input
+                        type="text"
+                        value={tier.minContribution}
+                        onChange={(e) => onValUpdate(index, e)}
+                        name="minContribution"
+                        className="form-control"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={tier.reward}
+                        onChange={(e) => onValUpdate(index, e)}
+                        name="reward"
+                        className="form-control"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-outline-danger btnTiers"
+                        onClick={(e) => tableRowRemove(index, e)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-
-        <button className="btn btn-primary my-2">Create Project</button>
+        <button
+          className="btn btn-primary my-2"
+          onClick={(e) => handleSubmit(e)}
+        >
+          Create Project
+        </button>
       </form>
     </div>
   );
 };
-
 export default AddProject;
-// export { DeleteUser };
