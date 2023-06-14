@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [processing, setProcessing] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -10,6 +12,8 @@ const CheckoutForm = () => {
     if (!stripe || !elements) {
       return;
     }
+
+    setProcessing(true); // disables the pay button after submission
 
     const response = await fetch("/api/create-payment-intent", {
       method: "POST",
