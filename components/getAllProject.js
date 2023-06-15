@@ -95,14 +95,31 @@ function GetAllProject() {
       </div>
       <div className="carousel-inner">
         {projects.map((p) => (
-          <div key={p.id} className={projects[0].id == p.id ? "carousel-item active" : "carousel-item"}>
-               <div className="d-flex">
+          <div
+            key={p.id}
+            className={
+              projects[0].id == p.id ? "carousel-item active" : "carousel-item"
+            }
+          >
+            <div className="">
               <img
                 src={p.image}
                 className="d-block w-100"
                 alt="project-image"
               />
-              <div>project desc</div>
+              <div>
+                <h4>
+                  <a
+                    className="green"
+                    href={"/single-project/" + p.id}
+                    // onClick={(e) => getCreaterProfile({ projectID }, e)}
+                  >
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp; read more &#8594;
+                  </a>
+                </h4>
+              </div>
             </div>
           </div>
         ))}
