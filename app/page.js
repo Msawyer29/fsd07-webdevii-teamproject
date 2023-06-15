@@ -21,7 +21,6 @@ const Home = () => (
     <Featured />
     <Successful />
     <Discover />
-    <FileUploader />
     <AddProject />
     <SignUp />
     {/* <GetUserByEmail /> */}
