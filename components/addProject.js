@@ -60,7 +60,7 @@ const AddProject = () => {
     //const imagesListRef = ref(firebaseStorage, "images/");
 
     if (imageUpload == null) return;
-    const imageRef = ref(firebaseStorage, `images/${imageUpload.name + v4()}`);
+    const imageRef = ref(firebaseStorage, `images/${v4() + imageUpload.name}`);
     values.createrId = userUID;
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref)

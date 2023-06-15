@@ -22,27 +22,33 @@ import Comments from "./comments";
 const ProjectDetails = ({ pId }) => {
   const [project, setProject] = useState([]);
   //const [loading, setLoading] = useState(true);
-  const collectionName = "projects";
-  const db = getFirestore();
-  const colRef = collection(db, collectionName);
+  //let project = [];
+  useEffect(() => {
+    const collectionName = "projects";
+    const db = getFirestore();
+    const colRef = collection(db, collectionName);
 
-  let daysRemaining = 0;
+    let daysRemaining = 0;
 
-  if (pId != undefined) {
-    const projId = pId.projectId;
-    const docRef = doc(db, "projects", projId);
-    getDoc(docRef).then((doc) => {
-      setProject(doc.data(), doc.id);
-    });
+    if (pId != undefined) {
+      const projId = pId.projectId;
+      const docRef = doc(db, "projects", projId);
 
-    //calculate daysleft
-    let today = new Date().toISOString().slice(0, 10);
-    const endDate = project.endDate;
-    const diffInMs = new Date(endDate) - new Date(today);
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
-    diffInDays < 0 ? (daysRemaining = 0) : (daysRemaining = diffInDays);
-    console.log(diffInDays);
-  }
+      getDoc(docRef).then((doc) => {
+        //project.push(doc.data(), doc.id);
+        setProject(doc.data(), doc.id);
+      });
+
+      //calculate daysleft
+      let today = new Date().toISOString().slice(0, 10);
+      const endDate = project.endDate;
+      const diffInMs = new Date(endDate) - new Date(today);
+      const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
+      diffInDays < 0 ? (daysRemaining = 0) : (daysRemaining = diffInDays);
+      console.log(diffInDays);
+      console.log(project);
+    }
+  }, []);
 
   return (
     <div>
@@ -79,7 +85,7 @@ const ProjectDetails = ({ pId }) => {
           </h1>
           <p className="green mt-0">backers</p>
           <h1 className="egg slim mb-0" id="deadline">
-            {daysRemaining}
+            {/* {daysRemaining} */}
           </h1>
           <p className="green mt-0 mb-5">days left</p>
 
