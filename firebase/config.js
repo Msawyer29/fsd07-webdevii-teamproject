@@ -1,3 +1,5 @@
+//--------------------------------------------------------------
+
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps } from "firebase/app";
 import { getStorage } from "firebase/storage";
@@ -9,15 +11,31 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC7Ke3NArI4KuNrChzMbLKGincGFHGNWko",
+//   authDomain: "the-hive-4c0c2.firebaseapp.com",
+//   projectId: "the-hive-4c0c2",
+//   storageBucket: "the-hive-4c0c2.appspot.com",
+//   messagingSenderId: "308053310116",
+//   appId: "1:308053310116:web:31dff7d49ef85e15994431",
+//   measurementId: "G-KMB5KQMMRD",
+// };
+
+//--------------------------------------------------------------------
 const firebaseConfig = {
-  apiKey: "AIzaSyC7Ke3NArI4KuNrChzMbLKGincGFHGNWko",
-  authDomain: "the-hive-4c0c2.firebaseapp.com",
-  projectId: "the-hive-4c0c2",
-  storageBucket: "the-hive-4c0c2.appspot.com",
-  messagingSenderId: "308053310116",
-  appId: "1:308053310116:web:31dff7d49ef85e15994431",
-  measurementId: "G-KMB5KQMMRD",
+  apiKey: "AIzaSyA0-xasUXF1b25CdelaBSJBAPeyJjkZ3I4",
+  authDomain: "the-hive-11ae5.firebaseapp.com",
+  projectId: "the-hive-11ae5",
+  storageBucket: "the-hive-11ae5.appspot.com",
+  messagingSenderId: "307793356244",
+  appId: "1:307793356244:web:aa37377b52b7e786ebe241",
+  measurementId: "G-7NVLH2JEN9",
 };
+
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+//const analytics = getAnalytics(firebase_app);
+//--------------------------------------------------------------------
 
 // // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
