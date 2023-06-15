@@ -33,7 +33,7 @@ const Login = () => {
     //TODO Validation
     signInWithEmailAndPassword(auth, email, password)
       .then((cred) => {
-        console.log("Login successful :", cred.user);
+        console.log("Login successful", cred.user);
         //TODO ResetForm
         setValues({
           email: "",

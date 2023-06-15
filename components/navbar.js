@@ -1,23 +1,32 @@
 "use client";
-import React, { useState, useRef } from "react";
-import firebase_app from "../firebase/config";
+import React, { useState, useEffect } from 'react';
 import Login from "./login";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import {
   getAuth,
-  createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 
 const auth = getAuth();
 
 const Navbar = () => {
+  // onAuthStateChanged gets triggered every time there is a change in the authentication state
+  // when a user logs in, it returns a User object, when a user logs out, it returns null - used to conditionally render our navbar links
+
+  // a new state variable currentUser is added to keep track of the current logged-in user
+  const [currentUser, setCurrentUser] = useState(null); // to store current logged in user, default set to "null"
+
+  useEffect(() => { // using useEffect to attach the observer on component mount and remove it on component unmount
+    // attach the listener when the component is mounted
+    // calling auth.onAuthStateChanged which takes a callback function that gets called whenever the authentication state changes
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setCurrentUser(user);  // this will be null when logged out, and contain user object when logged in
+    });
+
+    // this function also returns a cleanup function, which we're storing in unsubscribe to remove the observer on component unmount
+    // cleanup the listener when the component is unmounted
+    return () => unsubscribe();
+  }, []); // empty dependency array means this effect runs once on mount and cleanup on unmount
+
   const handleLogout = (e) => {
     signOut(auth)
       .then(() => {
@@ -26,11 +35,6 @@ const Navbar = () => {
       .catch((error) => {
         console.log(error.message);
       });
-  };
-
-  const handleLogin = (e) => {
-    console.log("I am here");
-    return <Login />;
   };
 
   return (
@@ -61,27 +65,35 @@ const Navbar = () => {
             find
           </button>
         </div>
-        <a
-          href="#"
-          className="nav-link me-3"
-          data-bs-toggle="modal"
-          data-bs-target="#signUp"
-        >
-          Register
-        </a>
-        <a href="#" className="nav-link me-3" onClick={handleLogout}>
-          Logout
-        </a>
+
+        {/* In the JSX we are conditionally rendering nav links based on currentUser state */}
+        {currentUser ? (
+          <a href="#" className="nav-link me-3" onClick={handleLogout}>
+            Logout
+          </a>
+        ) : (
+          <>
+            <a
+              href="#"
+              className="nav-link me-3"
+              data-bs-toggle="modal"
+              data-bs-target="#signUp"
+            >
+              Register
+            </a>
+            <a
+              href="#"
+              className="nav-link"
+              data-bs-toggle="modal"
+              data-bs-target="#login"
+            >
+              Login
+            </a>
+          </>
+        )}
+
         {/* ------------------------- */}
         {/* <!-- Button trigger modal --> */}
-        <a
-          href="#"
-          className="nav-link"
-          data-bs-toggle="modal"
-          data-bs-target="#login"
-        >
-          Login
-        </a>
 
         {/* Modal */}
         <div
@@ -107,19 +119,11 @@ const Navbar = () => {
               <div className="modal-body">
                 <Login />
               </div>
-              {/* <div class="modal-footer">
-                <button type="button" class="btn btn-primary">
-                  Login
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
         {/* ------------------------- */}
 
-        {/* <button className="btn btn-success mx-2" onClick={handleLogin}>
-          Login
-        </button> */}
       </div>
     </nav>
   );

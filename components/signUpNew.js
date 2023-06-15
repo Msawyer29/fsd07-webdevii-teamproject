@@ -109,7 +109,7 @@ const SignUp = () => {
   <div className="modal-dialog modal-dialog-centered">
     <div className="modal-content">
       <div className="modal-header">
-        <h1 className="modal-title dGreen fs-5" id="signUpLabel">Sign Up</h1>
+        <h1 className="modal-title dGreen fs-5" id="signUpLabel">Register Account</h1>
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body">
