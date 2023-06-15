@@ -1,10 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Login from "./login";
-import {
-  getAuth,
-  signOut,
-} from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
 
@@ -15,11 +12,12 @@ const Navbar = () => {
   // a new state variable currentUser is added to keep track of the current logged-in user
   const [currentUser, setCurrentUser] = useState(null); // to store current logged in user, default set to "null"
 
-  useEffect(() => { // using useEffect to attach the observer on component mount and remove it on component unmount
+  useEffect(() => {
+    // using useEffect to attach the observer on component mount and remove it on component unmount
     // attach the listener when the component is mounted
     // calling auth.onAuthStateChanged which takes a callback function that gets called whenever the authentication state changes
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user);  // this will be null when logged out, and contain user object when logged in
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user); // this will be null when logged out, and contain user object when logged in
     });
 
     // this function also returns a cleanup function, which we're storing in unsubscribe to remove the observer on component unmount
@@ -40,7 +38,9 @@ const Navbar = () => {
   return (
     <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between py-2">
       <div>
-        <img src="/assets/icons/logo.svg" alt="logo" id="logo" />
+        <a href="/">
+          <img src="/assets/icons/logo.svg" alt="logo" id="logo" />
+        </a>
       </div>
 
       <div className="d-flex align-items-center me-3">
@@ -123,7 +123,6 @@ const Navbar = () => {
           </div>
         </div>
         {/* ------------------------- */}
-
       </div>
     </nav>
   );
