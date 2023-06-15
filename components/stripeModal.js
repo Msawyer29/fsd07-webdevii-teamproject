@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "@components/CheckoutForm";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render
 const stripePromise = loadStripe(
@@ -13,9 +15,33 @@ const StripeModal = () => {
   const [modalKey, setModalKey] = useState(0); // initialize modalKey as 0
   const [paymentSuccess, setPaymentSuccess] = useState(false); // new state for payment success
   const [paymentError, setPaymentError] = useState(null); // new state for payment error
-  const modalRef = useRef(); // ref (modalRef) is created and attached to the modal's root div, see line 36
+  const [donorName, setDonorName] = useState(""); // new state for the donor name
+  const modalRef = useRef(); // ref (modalRef) is created and attached to the modal's root div, see line 42
 
   useEffect(() => {
+    // Get the current user
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    // Get Firestore instance
+    const db = getFirestore();
+
+    // If a user is logged in, fetch user data from Firestore
+    if (user) {
+      const q = query(collection(db, "users"), where("uid", "==", user.uid)); // Create a query against the collection.
+
+      getDocs(q)
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const userData = doc.data(); // Get user data
+            setDonorName(userData.firstName + " " + userData.lastName); // Set donor name
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+    }
+
     const modalElement = modalRef.current;
 
     if (!modalElement) {
@@ -29,11 +55,11 @@ const StripeModal = () => {
     };
     // event listener for the "hidden.bs.modal" event is attached to the modal element
     // this ensures that the handleHidden function (which increments modalKey) is called every time the modal is closed
-    modalElement.addEventListener('hidden.bs.modal', handleHidden);
+    modalElement.addEventListener("hidden.bs.modal", handleHidden);
 
     // Cleanup function to remove event listener
     return () => {
-      modalElement.removeEventListener('hidden.bs.modal', handleHidden);
+      modalElement.removeEventListener("hidden.bs.modal", handleHidden);
     };
   }, [modalKey]);
 
@@ -50,7 +76,7 @@ const StripeModal = () => {
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5 dGreen" id="stripePayLabel">
-              Dear [Donor's Name],
+              Dear {donorName}, {/* now using dynamic donor name here */}
             </h1>
 
             <button
@@ -65,14 +91,24 @@ const StripeModal = () => {
             support not only empowers independent artists but also helps bring
             our creative vision to life.
           </p>
-          {paymentSuccess && <div className="alert alert-success mt-3">Thank you! Your payment was completed successfully.</div>} {/* display success alert when paymentSuccess is true */}
-          {paymentError && <div className="alert alert-danger mt-3">{paymentError}</div>} {/* display error alert when paymentError is set */}
+          {paymentSuccess && (
+            <div className="alert alert-success mt-3">
+              Thank you! Your payment was completed successfully.
+            </div>
+          )}{" "}
+          {/* display success alert when paymentSuccess is true */}
+          {paymentError && (
+            <div className="alert alert-danger mt-3">{paymentError}</div>
+          )}{" "}
+          {/* display error alert when paymentError is set */}
           <div className="modal-body px-5">
-            <Elements stripe={stripePromise} key={modalKey}> {/* use modalKey as key prop, this forces React to create a new instance of the CheckoutForm component each time the key changes*/}
-            <CheckoutForm 
-              onPaymentSuccess={() => setPaymentSuccess(true)}
-              onPaymentError={(error) => setPaymentError(error)} // pass functions, set setPaymentSuccess to true & to set paymentError
-            /> 
+            <Elements stripe={stripePromise} key={modalKey}>
+              {" "}
+              {/* use modalKey as key prop, this forces React to create a new instance of the CheckoutForm component each time the key changes*/}
+              <CheckoutForm
+                onPaymentSuccess={() => setPaymentSuccess(true)}
+                onPaymentError={(error) => setPaymentError(error)} // pass functions, set setPaymentSuccess to true & to set paymentError
+              />
             </Elements>
           </div>
         </div>
