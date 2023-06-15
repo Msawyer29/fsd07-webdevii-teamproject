@@ -16,7 +16,7 @@ import {
 
 const auth = getAuth();
 
-const Login = () => {
+const Login = ({ closeModal }) => { // add closeModal as a prop
   const loginForm = useRef(null);
   const [values, setValues] = useState({
     email: "",
@@ -34,6 +34,10 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((cred) => {
         console.log("Login successful", cred.user);
+
+        // Close the modal after a successful login.
+        closeModal();
+
         //TODO ResetForm
         setValues({
           email: "",
