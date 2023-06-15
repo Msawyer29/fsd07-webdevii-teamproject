@@ -115,7 +115,10 @@ const StripeModal = ({ pId }) => {
               {" "}
               {/* use modalKey as key prop, this forces React to create a new instance of the CheckoutForm component each time the key changes*/}
               <CheckoutForm
-                onPaymentSuccess={() => setPaymentSuccess(true)}
+                onPaymentSuccess={() => {
+                  setPaymentSuccess(true);
+                  setPaymentError(null);  // Clear the error state
+                }}
                 onPaymentError={(error) => setPaymentError(error)} // pass functions, set setPaymentSuccess to true & to set paymentError
                 pId={pId}
               />
