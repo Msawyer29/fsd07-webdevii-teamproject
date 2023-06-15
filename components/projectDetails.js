@@ -1,6 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 import StripeModalButton from "./stripeModalButton";
 import StripeModal from "./stripeModal";
 import ProjectDescription from "./projectDescription";
@@ -16,25 +22,46 @@ const ProjectDetails = ({ pId }) => {
     const db = getFirestore();
     const colRef = collection(db, collectionName);
 
-    let daysRemaining = 0;
+    let daysLeft = 0;
 
     if (pId != undefined) {
       const projId = pId.projectId;
       const docRef = doc(db, "projects", projId);
 
       getDoc(docRef).then((doc) => {
-        // Here is the change Mac made: I set project to be an object that contains all properties of doc.data() and added an additional property 'id'
-        setProject({ ...doc.data(), id: doc.id });
-      });
+        //calculate days remaining
+        let today = new Date().toISOString().slice(0, 10);
+        const endDate = doc.data().endDate;
+        const diffInMs = new Date(endDate) - new Date(today);
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
+        //console.log(diffInDays < 0 ? 0 : diffInDays);
+        daysLeft = diffInDays < 0 ? 0 : diffInDays;
 
-      //calculate daysleft
-      let today = new Date().toISOString().slice(0, 10);
-      const endDate = project.endDate;
-      const diffInMs = new Date(endDate) - new Date(today);
-      const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
-      diffInDays < 0 ? (daysRemaining = 0) : (daysRemaining = diffInDays);
-      console.log(diffInDays);
-      console.log(project);
+        //---------------------------------------------------- contibution evaluation
+        let contributionSum = 0;
+        let contributionCounter = 0;
+        const colRef = collection(db, "projects", projId, "contributions");
+
+        const getAllContributions = onSnapshot(colRef, (snapshot) => {
+          snapshot.docs.forEach((cSnap) => {
+            contributionSum += Number(cSnap.data().amount);
+            // console.log(cSnap.data().amount);
+            contributionCounter++;
+          });
+          let contPercent = (contributionSum / doc.data().goal) * 100; //round to one decimal place
+          // console.log(contPercent);
+          // console.log(contributionSum);
+          // console.log(contributionCounter);
+          setProject({
+            ...doc.data(),
+            id: doc.id,
+            daysLeft: daysLeft,
+            contributionCounter: contributionCounter,
+            contributionSum: contributionSum,
+            contPercent: contPercent,
+          });
+        });
+      });
     }
   }, []);
 
@@ -48,18 +75,24 @@ const ProjectDetails = ({ pId }) => {
         </div>
         <div className="col-md-4 px-3">
           <p className="text-uppercase egg">stats</p>
-          <div
+          {/* <div
             className="progress mb-3"
             role="progressbar"
             aria-label="5px high"
-            aria-valuenow="25"
+            aria-valuenow="50"
             aria-valuemin="0"
             aria-valuemax="100"
           >
             <div className="progress-bar greenBG"></div>
-          </div>
+          </div> */}
+          <progress
+            id="file"
+            value={project.contPercent}
+            max="100"
+            className=""
+          ></progress>
           <h1 className="egg slim mb-0">
-            $<span id="funds">12.800</span>
+            $<span id="funds">{project.contributionSum}</span>
           </h1>
           <p className="green mt-0">
             pledged of{" "}
@@ -69,11 +102,11 @@ const ProjectDetails = ({ pId }) => {
             goal
           </p>
           <h1 className="egg slim mb-0" id="backers">
-            193
+            {project.contributionCounter}
           </h1>
           <p className="green mt-0">backers</p>
           <h1 className="egg slim mb-0" id="deadline">
-            {/* {daysRemaining} */}
+            {project.daysLeft}
           </h1>
           <p className="green mt-0 mb-5">days left</p>
 
