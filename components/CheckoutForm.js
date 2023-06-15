@@ -8,7 +8,7 @@ import firebase_app from "/firebase/config";
 const db = getFirestore(firebase_app);
 
 // addContribution function adds a new document to the 'contributions' collection - projectId and amount are hardcoded
-// this function will be called when the payment is successful
+// this function will be called by handleSubmit when the payment is successful
 const addContribution = async (userId, paymentIntent) => {
   try {
     const docRef = await addDoc(collection(db, "projects", "VHnRNxsVmoxDJpu3YpEd", "contributions"), {
