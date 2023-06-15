@@ -99,6 +99,9 @@ h6 {
 /* ----------------- HTML ELEMENTS ---------------------- */
 a {
   text-decoration: none;
+  font-family: "Archivo", sans-serif;
+  font-weight: 700;
+  color: inherit;
 }
 
 /* ----------------- BOOTSTRAP ELEMENTS ---------------------- */
@@ -123,6 +126,15 @@ a {
 .form-control:focus {
   border-color:#1a535c;
   box-shadow:0 0 0 0.25rem rgba(78, 205, 196,.50);
+}
+
+.form-control {
+  background-color: #4ecdc4;
+  border-color: #4ecdc4;
+}
+
+::placeholder {
+  color: #f7fff7 !important;
 }
 
 /* ----------------- CUSTOM ELEMENTS ---------------------- */
@@ -152,6 +164,64 @@ a {
 .spacer {
   min-height: 50px;
 }
+
+.projectDescription {
+  max-height:220px;
+  overflow-y: hidden;
+  margin-bottom:0 !important;
+}
+
+.shortDescription, .titleLimit {
+  max-height:50px;
+  overflow-y: hidden;
+  margin-bottom:0 !important;
+  max-width: 225px;
+}
+
+.shortTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; 
+}
+
+.card {
+  width:95%;
+
+  margin:3% 2.5% 3% 2.5%;
+  box-shadow: none;
+  transition: width  0.5s ease, box-shadow 0.5s ease, margin 0.5s ease, font-size 0.5s ease, background-color 0.75s ease;
+  /* font-size: 98%; */
+  /* transition: box-shadow 0.5s; */
+  
+}
+
+.card:hover {
+  width:100%;
+ 
+  margin:0;
+  background-color: #4ecdc4 !important;
+  /* font-size: 101%; */
+  -webkit-box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
+box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
+}
+.card:hover p {
+  color:#f7fff7 !important;
+}
+
+.titleLink {
+  background-color: #f7fff7;
+  color: black;
+  transition: background-color 0.75s ease, color 0.5s ease;
+}
+
+.titleLink:hover {
+  background-color:#4ecdc4 !important;
+  color: #f7fff7 !important;
+}
+
+
 
 
 /* file end */

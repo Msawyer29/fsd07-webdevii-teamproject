@@ -5,6 +5,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { v4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { firebaseStorage } from "../firebase/config";
+import Footer from "./footer";
 
 import {
   getFirestore,
@@ -127,36 +128,40 @@ const AddProject = () => {
 
   //---------------------------------
   return (
-    <div className="container">
-      <h2>Create Project</h2>
-      <form className="col-8" encType="multipart/form-data">
-        <div className="d-flex">
-          <label className="form-label col-4">Project Title</label>
+    <div className="container my-5">
+         <hr className="green" />
+      <h1 className="egg text-upercase text-center">Create a New Project</h1>
+      <hr className="green" />
+      <div className="spacer"></div>
+      <div className="col-md-8 mx-auto mb-5">
+      <form className="" encType="multipart/form-data">
+        <div className="mb-3">
+          <label className="form-label h4">Project Title</label>
           <input
             type="text"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="title"
             placeholder="Project Title"
             defaultValue={values.title}
             onChange={onChange}
           />
         </div>
-        <div className="d-flex">
-          <label className="form-label col-4">Category</label>
+        <div className="mb-3">
+          <label className="form-label h4">Category</label>
           <input
             type="text"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="category"
             placeholder="Category"
             value={values.category}
             onChange={onChange}
           />
         </div>
-        <div className="d-flex">
-          <label className="form-label col-4">Project Description</label>
+        <div className="mb-3">
+          <label className="form-label h4">Project Description</label>
           <textarea
             type="text"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             rows="6"
             name="description"
             placeholder="Project description here .... "
@@ -164,44 +169,48 @@ const AddProject = () => {
             onChange={onChange}
           ></textarea>
         </div>
-        <div className="d-flex">
-          <label className="form-label col-4">Goal Amount</label>
+        <div className="mb-3">
+          <label className="form-label h4">Goal Amount</label>
           <input
             type="text"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="goal"
             placeholder="Goal Amount"
             value={values.goal}
             onChange={onChange}
           />
         </div>
+
         <div className="d-flex">
-          <label className="form-label col-4">Start Date</label>
+        <div className="mb-3 col-md-6 pe-2">
+          <label className="form-label h4">Start Date</label>
           <input
             type="date"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="startDate"
             placeholder="Start Date"
             value={values.startDate}
             onChange={onChange}
           />
         </div>
-        <div className="d-flex">
-          <label className="form-label col-4">End Date</label>
+        <div className="mb-3 col-md-6 ps-2">
+          <label className="form-label h4">End Date</label>
           <input
             type="date"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="endDate"
             placeholder="End Date"
             value={values.endDate}
             onChange={onChange}
           />
         </div>
-        <div className="d-flex">
-          <label className="form-label col-4">Image</label>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label h4">Image</label>
           <input
             type="file"
-            className="form-control mb-3 col-8"
+            className="form-control mb-3 "
             name="file"
             placeholder="Choose image ..."
             //value={values.image}
@@ -212,11 +221,11 @@ const AddProject = () => {
             }}
           />
         </div>
-
-        <div className="d-flex">
-          <label className="form-label col-4">Tiers</label>
+        <div className="mb-5">
+        <div className="mb-3">
+          <label className="form-label h4">Tiers</label>
           <div className="col-12">
-            <table className="table">
+            <table className="table rounded">
               <thead>
                 <tr>
                   <th className="col-3">Minimum Contribution</th>
@@ -266,13 +275,17 @@ const AddProject = () => {
             </table>
           </div>
         </div>
-        <button
-          className="btn btn-primary my-2"
+        </div>
+        <a
+          href="#"
+          className="myBtnEgg"
           onClick={(e) => handleSubmit(e)}
         >
           Create Project
-        </button>
+        </a>
       </form>
+    </div>
+    <Footer />
     </div>
   );
 };
