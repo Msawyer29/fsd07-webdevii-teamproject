@@ -1,20 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import firebase_app from "../firebase/config";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-  limit,
-  orderBy,
-  getDoc,
-  getDocsFromServer,
-  doc,
-} from "firebase/firestore";
+import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
 
 // maybe delete down
 
@@ -48,11 +35,11 @@ const ProjectDetails = ({ pId }) => {
       setProject(doc.data(), doc.id);
     });
 
+    //calculate daysleft
     let today = new Date().toISOString().slice(0, 10);
     const endDate = project.endDate;
     const diffInMs = new Date(endDate) - new Date(today);
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
-
     diffInDays < 0 ? (daysRemaining = 0) : (daysRemaining = diffInDays);
     console.log(diffInDays);
   }
@@ -63,7 +50,7 @@ const ProjectDetails = ({ pId }) => {
       <div className="row d-flex">
         <div className="col-md-8 px-3">
           <img src={project.image} className="img-fluid" alt="..." />
-          <ProjectDescription />
+          <ProjectDescription projDesc={project.description} />
         </div>
         <div className="col-md-4 px-3">
           <p className="text-uppercase egg">stats</p>
@@ -83,7 +70,7 @@ const ProjectDetails = ({ pId }) => {
           <p className="green mt-0">
             pledged of{" "}
             <strong>
-              CA$ <span id="goal">15.000</span>
+              CA$ <span id="goal">{project.goal}</span>
             </strong>{" "}
             goal
           </p>
@@ -92,7 +79,7 @@ const ProjectDetails = ({ pId }) => {
           </h1>
           <p className="green mt-0">backers</p>
           <h1 className="egg slim mb-0" id="deadline">
-            {/* {daysRemaining} */}
+            {daysRemaining}
           </h1>
           <p className="green mt-0 mb-5">days left</p>
 

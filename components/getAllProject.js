@@ -69,9 +69,9 @@ function GetAllProject() {
 }
 export default GetAllProject;
 
-// //--- carosel - Not successful -map function attaching image just under one another or overlapping
-{
-  /* <div
+// --- For Silviya --- the above return statement need to replace by following is the code for carosel
+/* 
+  <div
 id="carouselExampleIndicators"
 className="carousel slide"
 data-bs-ride="carousel"
@@ -126,6 +126,8 @@ data-bs-ride="carousel"
   <span className="carousel-control-next-icon" aria-hidden="true"></span>
   <span className="visually-hidden">Next</span>
 </button>
-</div> */
-}
+</div> 
+
+*/
+
 // //---
