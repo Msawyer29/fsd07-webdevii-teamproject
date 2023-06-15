@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  Timestamp,
+} from "firebase/firestore";
 import firebase_app from "/firebase/config";
 
 // Get a Firestore instance
@@ -9,17 +14,24 @@ const db = getFirestore(firebase_app);
 
 // addContribution function adds a new document to the 'contributions' collection - projectId and amount are hardcoded
 // this function will be called by handleSubmit when the payment is successful
-const addContribution = async (userId, paymentIntent) => {
+const addContribution = async (userId, paymentIntent, pId) => {
   try {
-    const docRef = await addDoc(collection(db, "projects", "VHnRNxsVmoxDJpu3YpEd", "contributions"), {
-      amount: 10,
-      contributorId: userId,
-      date: Timestamp.fromDate(new Date()),
-      paymentDetails: {
-        status: paymentIntent.status,
-        transactionId: paymentIntent.id
+    console.log(pId);
+    console.log(pId.pId);
+    console.log(pId.projectId);
+    console.log(projectIdTemp);
+    const docRef = await addDoc(
+      collection(db, "projects", { pId }, "contributions"),
+      {
+        amount: 10,
+        contributorId: userId,
+        date: Timestamp.fromDate(new Date()),
+        paymentDetails: {
+          status: paymentIntent.status,
+          transactionId: paymentIntent.id,
+        },
       }
-    });
+    );
 
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
@@ -27,7 +39,8 @@ const addContribution = async (userId, paymentIntent) => {
   }
 };
 
-const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure onPaymentSuccess & onPaymentError from props (passed as a prop form stripeModal component)
+const CheckoutForm = ({ onPaymentSuccess, onPaymentError, projId }) => {
+  // Destructure onPaymentSuccess & onPaymentError from props (passed as a prop form stripeModal component)
   // useStripe and useElements are hooks provided by Stripe to access the stripe object and card element respectively
   const stripe = useStripe();
   const elements = useElements();
@@ -45,10 +58,10 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure
     if (!stripe || !elements || paymentCompleted) {
       return;
     }
-    
+
     // Once the form is submitted, we set processing to true to disable the button while the payment is processed
     setProcessing(true);
-    
+
     // Fetch the client secret from our backend to use in the payment process
     const response = await fetch("/api/create-payment-intent", {
       method: "POST",
@@ -73,7 +86,9 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure
     // Check if payment succeeded or failed.
     if (result.error) {
       console.log(result.error.message);
-      onPaymentError("Payment declined. Please consult your credit card provider for more details."); // call the passed in function from stripeModal when payment fails
+      onPaymentError(
+        "Payment declined. Please consult your credit card provider for more details."
+      ); // call the passed in function from stripeModal when payment fails
       setProcessing(false); // enables the pay button again if there was an error
     } else {
       if (result.paymentIntent.status === "succeeded") {
@@ -87,7 +102,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure
         } else {
           console.error("No user is currently signed in");
         }
-        
+
         // Call the onPaymentSuccess callback - call the passed in function from stripeModal when payment is successful
         if (onPaymentSuccess) {
           onPaymentSuccess();
@@ -100,13 +115,16 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError }) => {  // Destructure
   // Render the form and disable the Pay button if either stripe has not loaded yet or we are in the middle of processing a payment and when payment is successful
   return (
     <div id="form">
-    <form onSubmit={handleSubmit}>
-      
-      <CardElement />
-      <button className="btn btn-primary mt-3 " type="submit" disabled={!stripe || processing || paymentCompleted}>
-        Pay
-      </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <CardElement />
+        <button
+          className="btn btn-primary mt-3 "
+          type="submit"
+          disabled={!stripe || processing || paymentCompleted}
+        >
+          Pay
+        </button>
+      </form>
     </div>
   );
 };

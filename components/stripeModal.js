@@ -4,19 +4,27 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "@components/CheckoutForm";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render
 const stripePromise = loadStripe(
   "pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA"
 );
 
-const StripeModal = () => {
+const StripeModal = ({ pId }) => {
   const [modalKey, setModalKey] = useState(0); // initialize modalKey as 0
   const [paymentSuccess, setPaymentSuccess] = useState(false); // new state for payment success
   const [paymentError, setPaymentError] = useState(null); // new state for payment error
   const [donorName, setDonorName] = useState(""); // new state for the donor name
   const modalRef = useRef(); // ref (modalRef) is created and attached to the modal's root div, see line 42
+  console.log(pId);
+  // console.log(pId.projectID);
 
   useEffect(() => {
     // Get the current user
@@ -41,6 +49,7 @@ const StripeModal = () => {
           console.log("Error getting documents: ", error);
         });
     }
+    console.log(donorName);
 
     const modalElement = modalRef.current;
 
@@ -108,6 +117,7 @@ const StripeModal = () => {
               <CheckoutForm
                 onPaymentSuccess={() => setPaymentSuccess(true)}
                 onPaymentError={(error) => setPaymentError(error)} // pass functions, set setPaymentSuccess to true & to set paymentError
+                pId={pId}
               />
             </Elements>
           </div>

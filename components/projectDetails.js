@@ -20,6 +20,7 @@ import StripeModal from "./stripeModal";
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
 const ProjectDetails = ({ pId }) => {
+  console.log(pId.projectId);
   const [project, setProject] = useState([]);
   //const [loading, setLoading] = useState(true);
   //let project = [];
@@ -90,7 +91,7 @@ const ProjectDetails = ({ pId }) => {
           <p className="green mt-0 mb-5">days left</p>
 
           <StripeModalButton />
-          <StripeModal />
+          <StripeModal pId={pId.projectId} />
         </div>
       </div>
       <Comments />
