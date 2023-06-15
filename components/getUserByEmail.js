@@ -33,8 +33,8 @@ function GetUserByEmail() {
       });
       setUsers(userArray);
       setLoading(false);
-      console.log(userArray);
-      console.log(userArray["qNvKewgiffu7GmKtDq3R"]);
+      // console.log(userArray);
+      // console.log(userArray["qNvKewgiffu7GmKtDq3R"]);
       userArray = []; //reset userArray
     });
   }, []);

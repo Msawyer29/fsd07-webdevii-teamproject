@@ -1,36 +1,69 @@
 "use client";
+import React, { useState, useRef, useEffect } from "react";
+import firebase_app from "../firebase/config";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+  limit,
+  orderBy,
+  getDoc,
+  getDocsFromServer,
+  doc,
+} from "firebase/firestore";
 
 // maybe delete down
-
-
 
 import { loadStripe } from "@stripe/stripe-js";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe("pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA");
+const stripePromise = loadStripe(
+  "pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA"
+);
 
 // maybe delete up
-
 import StripeModalButton from "./stripeModalButton";
 import StripeModal from "./stripeModal";
 
-
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
-const ProjectDetails = () => {
+const ProjectDetails = ({ pId }) => {
+  const [project, setProject] = useState([]);
+  //const [loading, setLoading] = useState(true);
+  const collectionName = "projects";
+  const db = getFirestore();
+  const colRef = collection(db, collectionName);
+
+  let daysRemaining = 0;
+
+  if (pId != undefined) {
+    const projId = pId.projectId;
+    const docRef = doc(db, "projects", projId);
+    getDoc(docRef).then((doc) => {
+      setProject(doc.data(), doc.id);
+    });
+
+    let today = new Date().toISOString().slice(0, 10);
+    const endDate = project.endDate;
+    const diffInMs = new Date(endDate) - new Date(today);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1; //plus 1 => considering endDate = today days,then  remaining = 1;
+
+    diffInDays < 0 ? (daysRemaining = 0) : (daysRemaining = diffInDays);
+    console.log(diffInDays);
+  }
+
   return (
     <div>
-      <h1 className="egg">Project Title</h1>
+      <h1 className="egg">{project.title}</h1>
       <div className="row d-flex">
         <div className="col-md-8 px-3">
-          <img
-            src="/assets/images/together.jpg"
-            className="img-fluid"
-            alt="..."
-          />
+          <img src={project.image} className="img-fluid" alt="..." />
           <ProjectDescription />
-         
         </div>
         <div className="col-md-4 px-3">
           <p className="text-uppercase egg">stats</p>
@@ -59,15 +92,12 @@ const ProjectDetails = () => {
           </h1>
           <p className="green mt-0">backers</p>
           <h1 className="egg slim mb-0" id="deadline">
-            21
+            {/* {daysRemaining} */}
           </h1>
           <p className="green mt-0 mb-5">days left</p>
-         
-         
-        <StripeModalButton />
-          <StripeModal />
 
-         
+          <StripeModalButton />
+          <StripeModal />
         </div>
       </div>
       <Comments />

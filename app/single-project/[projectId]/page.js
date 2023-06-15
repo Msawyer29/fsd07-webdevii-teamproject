@@ -5,9 +5,9 @@ const SingleProject = ({ params }) => {
   return (
     <div className="container px-5">
       <h1>My Page</h1>
-      <GetUserByEmail />
-      <Categories pId={params} />
-      <ProjectDetails />
+      {/* <GetUserByEmail /> */}
+      <Categories />
+      <ProjectDetails pId={params} />
     </div>
   );
 };
