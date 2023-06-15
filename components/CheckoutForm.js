@@ -59,7 +59,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   const getMinContribution = async () => {
     const docRef = doc(db, "projects", pId);
     const docSnap = await getDoc(docRef);
-    
+
     if (docSnap.exists()) {
       return docSnap.data().tiers[0].minContribution;
     } else {
@@ -73,13 +73,15 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
 
     // Get the minimum contribution
     const minContribution = await getMinContribution();
-    
+    console.log("Minimum Contribution: ", minContribution); // verify minContribution value is correctly retrieved from the Firestore database
+
+    console.log("Contribution Amount Entered: ", amount); // Confirm the amount state is correctly set when you enter the value in the input field
     // If the amount is less than the minimum contribution, display an error and stop the payment process
-    if (amount < minContribution) {
-      const errorMsg = "Your contribution must be at least $" + minContribution + ".";
+    if (parseInt(amount) < parseInt(minContribution)) {
+      const errorMsg ="Your contribution must be at least $" + minContribution + ".";
       setErrorMessage(errorMsg);
       onPaymentError(errorMsg);
-  return;
+      return;
     }
 
     // If stripe or elements haven't loaded yet, stop the execution of the handleSubmit function
@@ -148,7 +150,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   return (
     <div id="form">
       <form onSubmit={handleSubmit}>
-        <div style={{ textAlign: 'center', padding: '10px 0', color: 'black' }}>
+        <div style={{ textAlign: "center", padding: "10px 0", color: "black" }}>
           <label>
             Contribution Amount:
             <input
