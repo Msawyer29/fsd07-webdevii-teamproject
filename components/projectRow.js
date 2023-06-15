@@ -11,6 +11,11 @@ const ProjectRow = ({ project }) => {
   let projectID = project.id;
   let imageUrl = project.image;
   let projectDesc = project.description.substring(0, 240) + " .....";
+
+  let urlProjectDetailPage = "/single-project/" + project.id;
+
+  // const getCreaterProfile()
+
   return (
     <div className="mb-5">
       <h6 className="egg text-uppercase mt-5 mb-3">featured projects</h6>
@@ -38,7 +43,7 @@ const ProjectRow = ({ project }) => {
                 <h4>
                   <a
                     className="green"
-                    href="#"
+                    href={urlProjectDetailPage}
                     onClick={(e) => getCreaterProfile({ projectID }, e)}
                   >
                     read more &#8594;

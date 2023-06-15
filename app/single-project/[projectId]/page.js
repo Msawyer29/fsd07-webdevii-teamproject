@@ -1,11 +1,13 @@
 import Categories from "@components/categories";
 import ProjectDetails from "@components/projectDetails";
-const SingleProject = () => {
+import GetUserByEmail from "@components/getUserByEmail";
+const SingleProject = ({ params }) => {
   return (
     <div className="container px-5">
-      <Categories />
+      <h1>My Page</h1>
+      <GetUserByEmail />
+      <Categories pId={params} />
       <ProjectDetails />
-    
     </div>
   );
 };

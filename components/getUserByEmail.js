@@ -20,24 +20,21 @@ function GetUserByEmail() {
   const db = getFirestore();
   const colRef = collection(db, collectionName);
   //query
-  const q = query(colRef, where("email", "==", "arjun.nbsm@yahoo.com"));
-  //if we need order by: (first need to import 'orderBy') :-> this will may produce error if orderBy properties is not indexed, if error occur, click the link that bring to window to index ther properties, click OK to  Add index
-  // const q2 = query(
-  //   colRef,
-  //   where("email", "==", "arjun.nbsm@yahoo.com"),
-  //   orderBy("firstName", "desc")
-  // );
+  const pq = query(colRef, where("email", "==", "arjun.nbsm@yahoo.com"));
 
   let userArray = [];
+
   //---------------------------------
   useEffect(() => {
-    const usersDetails = onSnapshot(q, (snapshot) => {
+    const usersDetails = onSnapshot(pq, (snapshot) => {
+      console.log(snapshot.docs);
       snapshot.docs.forEach((doc) => {
         userArray.push({ ...doc.data(), id: doc.id });
       });
       setUsers(userArray);
       setLoading(false);
       console.log(userArray);
+      console.log(userArray["qNvKewgiffu7GmKtDq3R"]);
       userArray = []; //reset userArray
     });
   }, []);
