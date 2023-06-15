@@ -7,6 +7,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const ProjectRow = ({ project }) => {
   let createrID = project.createrId;
+  let createrName = project.creater;
   let projectID = project.id;
   let imageUrl = project.image;
   let projectDesc = project.description.substring(0, 240) + " .....";
@@ -32,7 +33,7 @@ const ProjectRow = ({ project }) => {
                   // className="egg fst-italic projectAuthor"
                   onClick={(e) => getCreaterProfile({ createrID }, e)}
                 >
-                  Creater Profile &#8594;
+                  {createrName} &#8594;
                 </a>
                 <h4>
                   <a
