@@ -19,7 +19,7 @@ const db = getFirestore(firebase_app);
 const addContribution = async (userId, paymentIntent, pId, amount) => {
   try {
     const docRef = await addDoc(
-      collection(db, "projects", pId , "contributions"),
+      collection(db, "projects", pId, "contributions"),
       {
         amount: amount, // changed from 10 hardcoded
         contributorId: userId,
