@@ -6,6 +6,8 @@ import {
   collection,
   addDoc,
   Timestamp,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 import firebase_app from "/firebase/config";
 
@@ -14,12 +16,12 @@ const db = getFirestore(firebase_app);
 
 // addContribution function adds a new document to the 'contributions' collection - projectId and amount are hardcoded
 // this function will be called by handleSubmit when the payment is successful
-const addContribution = async (userId, paymentIntent, pId) => {
+const addContribution = async (userId, paymentIntent, pId, amount) => {
   try {
     const docRef = await addDoc(
       collection(db, "projects", pId, "contributions"),
       {
-        amount: 10,
+        amount: amount, // changed from 10 hardcoded
         contributorId: userId,
         date: Timestamp.fromDate(new Date()),
         paymentDetails: {
@@ -47,8 +49,40 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   // paymentCompleted state variable for payment completion, after successful payment the Pay button is disabled
   const [paymentCompleted, setPaymentCompleted] = useState(false);
 
+  // state variable for errorMessage when payment is < than minContribution amount
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // State for the amount
+  const [amount, setAmount] = useState(0);
+
+  // Function to get the minimum contribution from Firestore
+  const getMinContribution = async () => {
+    const docRef = doc(db, "projects", pId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data().tiers[0].minContribution;
+    } else {
+      console.log("No such document!");
+      return 0;
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Get the minimum contribution
+    const minContribution = await getMinContribution();
+    console.log("Minimum Contribution: ", minContribution); // verify minContribution value is correctly retrieved from the Firestore database
+
+    console.log("Contribution Amount Entered: ", amount); // Confirm the amount state is correctly set when you enter the value in the input field
+    // If the amount is less than the minimum contribution, display an error and stop the payment process
+    if (parseInt(amount) < parseInt(minContribution)) {
+      const errorMsg ="Your contribution must be at least $" + minContribution + ".";
+      setErrorMessage(errorMsg);
+      onPaymentError(errorMsg);
+      return;
+    }
 
     // If stripe or elements haven't loaded yet, stop the execution of the handleSubmit function
     if (!stripe || !elements || paymentCompleted) {
@@ -64,7 +98,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: 1000 }), // Amount is in cents when using Stripe API
+      body: JSON.stringify({ amount: amount * 100 }), // Amount is in cents when using Stripe API
     });
 
     const clientSecret = await response.text();
@@ -89,6 +123,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
     } else {
       if (result.paymentIntent.status === "succeeded") {
         console.log("Payment processed successfully");
+        setErrorMessage(null); // reset the minContribution error message
         setPaymentCompleted(true); // setting the paymentCompleted to true disables the Pay button after successful payment
         // get the userId from the authenticated user logged into the session
         const auth = getAuth();
@@ -97,7 +132,7 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
         console.log("Payment Intent: ", result.paymentIntent);
         console.log("Project Id: ", pId);
         if (userId) {
-          addContribution(userId, result.paymentIntent, pId); // the addContribution function is called, pass pId to function
+          addContribution(userId, result.paymentIntent, pId, amount); // the addContribution function is called, pass pId to function
         } else {
           console.error("No user is currently signed in");
         }
@@ -115,7 +150,19 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   return (
     <div id="form">
       <form onSubmit={handleSubmit}>
+        <div style={{ textAlign: "center", padding: "10px 0", color: "black" }}>
+          <label>
+            Contribution Amount:
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+          </label>
+        </div>
         <CardElement />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <button
           className="btn btn-primary mt-3 "
           type="submit"

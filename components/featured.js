@@ -1,150 +1,132 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
+import firebase_app from "../firebase/config";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  limit,
+  orderBy,
+  where,
+} from "firebase/firestore";
+import ProjectRow from "./projectRow";
+import ProjectDetails from "./projectDetails";
 
-const Featured = () => {
-  return (
-    <div className="mb-5">
-      <h6 className="egg text-uppercase mt-5 mb-3">featured projects</h6>
+function FeaturedProject() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const db = getFirestore(firebase_app);
 
-      {/* wORKING carousel test start*/}
+  let usersArray = [];
+  let projectsArray = [];
+  //---------------------------------
+  useEffect(() => {
+    const usersDetails = onSnapshot(collection(db, "users"), (snapshot) => {
+      snapshot.docs.forEach((uSnap) => {
+        usersArray[uSnap.data().uid] =
+          uSnap.data().firstName + " " + uSnap.data().lastName;
+      });
+    });
+    const q = query(
+      collection(db, "projects"),
+      orderBy("startDate", "desc"),
+      limit(3)
+    );
+    const projectssDetails = onSnapshot(q, (projSnaps) => {
+      projSnaps.docs.forEach((pSnap) => {
+        let createrName = usersArray[pSnap.data().createrId];
+        projectsArray.push({
+          ...pSnap.data(),
+          id: pSnap.id,
+          creater: createrName,
+        });
+      });
+      setProjects(projectsArray);
+      console.log(projectsArray);
+      setLoading(false);
 
-      <div id="carouselExampleIndicators" className="carousel slide">
-      <div className="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
-          </div>
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <div className="row d-flex">
-              <div className="col-md-8 px-3">
-                <img
-                  src="/assets/images/together.jpg"
-                  className="img-fluid"
-                  alt="..."
-                />
-              </div>
-              <div className="col-md-4 px-3">
-                <h2 className="egg projectTitle text-capitalize">
-                  together alone documentary film
-                </h2>
-
-                <p className="green projectDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-                <p className="egg fst-italic projectAuthor">by Mark Boone</p>
-                <h4>
-                  <a className="green" href="#">
-                    read more &#8594;
-                  </a>
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* delete below */}
-
-          <div className="carousel-item">
-            <div className="row d-flex">
-              <div className="col-md-8 px-3">
-                <img
-                  src="/assets/images/together.jpg"
-                  className="img-fluid"
-                  alt="..."
-                />
-              </div>
-              <div className="col-md-4 px-3">
-                <h2 className="egg projectTitle text-capitalize">
-                  2nd projkect title
-                </h2>
-
-                <p className="green projectDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-                <p className="egg fst-italic projectAuthor">by Mark Boone</p>
-                <h4>
-                  <a className="green" href="#">
-                    read more &#8594;
-                  </a>
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div className="carousel-item">
-            <div className="row d-flex">
-              <div className="col-md-8 px-3">
-                <img
-                  src="/assets/images/together.jpg"
-                  className="img-fluid"
-                  alt="..."
-                />
-              </div>
-              <div className="col-md-4 px-3">
-                <h2 className="egg projectTitle text-capitalize">
-                  3rd project title
-                </h2>
-
-                <p className="green projectDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-                <p className="egg fst-italic projectAuthor">by Mark Boone</p>
-                <h4>
-                  <a className="green" href="#">
-                    read more &#8594;
-                  </a>
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* delete above */}
-   
+      projectsArray = []; //reset projectsArray
+      usersArray = []; //reset userArray
+    });
+  }, []);
+  if (loading) {
+    return (
+      <div>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       </div>
+    );
+  }
 
-      {/* WORKING carousel test end */}
+  return (
+    <div>
+      
+    <div
+      id="featuredIndicators"
+      className="carousel slide py-3"
+      data-bs-ride="carousel"
+    >
+      <h6 className="egg text-uppercase m-0">featured projects</h6>
+      <div className="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#featuredIndicators"
+          data-bs-slide-to="0"
+          className="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#featuredIndicators"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#featuredIndicators"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div className="carousel-inner ">
+        {projects.map((p) => (
+           <div key={p.id} className={projects[0].id == p.id ? "carousel-item active" : "carousel-item"}>
+           <div className="row d-flex">
+             <div className="col-md-8 px-3">
+               <img
+                 src={p.image}
+                 className="img-fluid"
+                 alt="..."
+               />
+             </div>
+             <div className="col-md-4 px-3">
+               <h2 className="egg projectTitle text-capitalize">
+                 {p.title}
+               </h2>
 
+               <p className="green projectDescription">
+                 {p.description}
+               </p>
+               <p className="green">[ ... ]</p>
+               <p className="egg fst-italic projectAuthor">by Mark Boone</p>
+               <h4>
+                 <a className="green" href="/single-project/{p.id}">
+                   read more &#8594;
+                 </a>
+               </h4>
+             </div>
+           </div>
+         </div>
+        ))}
+      </div>
+    
       <div className="spacer"></div>
     </div>
+    </div>
   );
-};
+}
+export default FeaturedProject;
 
-export default Featured;

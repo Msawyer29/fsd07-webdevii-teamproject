@@ -14,15 +14,13 @@ const RootLayout = ({ children }) => {
         <script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossOrigin="anonymous"
-        ></script>
+          crossOrigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/1230c6d306.js" crossOrigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
-      
+          rel="stylesheet" />
       </head>
       <body className="dGreenBG egg">
         <header>
