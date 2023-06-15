@@ -16,12 +16,8 @@ const db = getFirestore(firebase_app);
 // this function will be called by handleSubmit when the payment is successful
 const addContribution = async (userId, paymentIntent, pId) => {
   try {
-    console.log(pId);
-    console.log(pId.pId);
-    console.log(pId.projectId);
-    console.log(projectIdTemp);
     const docRef = await addDoc(
-      collection(db, "projects", { pId }, "contributions"),
+      collection(db, "projects", pId , "contributions"),
       {
         amount: 10,
         contributorId: userId,
@@ -39,7 +35,7 @@ const addContribution = async (userId, paymentIntent, pId) => {
   }
 };
 
-const CheckoutForm = ({ onPaymentSuccess, onPaymentError, projId }) => {
+const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   // Destructure onPaymentSuccess & onPaymentError from props (passed as a prop form stripeModal component)
   // useStripe and useElements are hooks provided by Stripe to access the stripe object and card element respectively
   const stripe = useStripe();
@@ -97,8 +93,11 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, projId }) => {
         // get the userId from the authenticated user logged into the session
         const auth = getAuth();
         const userId = auth.currentUser ? auth.currentUser.uid : null;
+        console.log("User Id: ", userId);
+        console.log("Payment Intent: ", result.paymentIntent);
+        console.log("Project Id: ", pId);
         if (userId) {
-          addContribution(userId, result.paymentIntent); // the addContribution function is called
+          addContribution(userId, result.paymentIntent, pId); // the addContribution function is called, pass pId to function
         } else {
           console.error("No user is currently signed in");
         }

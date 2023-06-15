@@ -1,24 +1,11 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import firebase_app from "../firebase/config";
+import React, { useState, useEffect } from "react";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
-
-// maybe delete down
-
-import { loadStripe } from "@stripe/stripe-js";
-
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-  "pk_test_51MsdkuKcBJEP5unczDs6Q8CfWFl7rGELmQBhDbj9PzXAHfwLcF1xXkYs1FwzNdEhA1xsS59QqIbWzvXBZS7TZPC700sreRX3uA"
-);
-
-// maybe delete up
 import StripeModalButton from "./stripeModalButton";
 import StripeModal from "./stripeModal";
-
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
+
 const ProjectDetails = ({ pId }) => {
   console.log(pId.projectId);
   const [project, setProject] = useState([]);
@@ -36,8 +23,8 @@ const ProjectDetails = ({ pId }) => {
       const docRef = doc(db, "projects", projId);
 
       getDoc(docRef).then((doc) => {
-        //project.push(doc.data(), doc.id);
-        setProject(doc.data(), doc.id);
+        // Here is the change Mac made: I set project to be an object that contains all properties of doc.data() and added an additional property 'id'
+        setProject({ ...doc.data(), id: doc.id });
       });
 
       //calculate daysleft
@@ -91,7 +78,11 @@ const ProjectDetails = ({ pId }) => {
           <p className="green mt-0 mb-5">days left</p>
 
           <StripeModalButton />
-          <StripeModal pId={pId.projectId} />
+          {/* Now we are checking if project.id exists before rendering StripeModal. This change ensures that the project's ID is correctly 
+          stored in the project state object and that StripeModal receives the project's ID as a prop. The reason we need to make sure project.id 
+          exists before rendering StripeModal is that React will initially render the component before the useEffect fetches the project data, causing 
+          the prop to be undefined. This condition will ensure that StripeModal is only rendered once the project data is fetched and project.id is defined. */}
+          {project.id && <StripeModal pId={project.id} />}
         </div>
       </div>
       <Comments />
