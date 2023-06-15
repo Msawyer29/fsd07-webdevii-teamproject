@@ -4,46 +4,51 @@ import firebase_app from "../firebase/config";
 import {
   getFirestore,
   collection,
-  getDocs,
   onSnapshot,
-  getDoc,
   query,
   limit,
   orderBy,
+  where,
 } from "firebase/firestore";
 import ProjectRow from "./projectRow";
+import ProjectDetails from "./projectDetails";
 
 function GetAllProject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const colName = "projects";
-  const db = getFirestore();
-  const colRef = collection(db, colName);
-  let projectArray = [];
-  const userRef = collection(db, "users");
-  const q = query(colRef, orderBy("startDate", "asc"), limit(3));
-  //query
+  const db = getFirestore(firebase_app);
 
+  let usersArray = [];
+  let projectsArray = [];
   //---------------------------------
   useEffect(() => {
-    const projectssDetails = onSnapshot(q, (snapshot) => {
-      //console.log(snapshot.docs);
-      snapshot.docs.forEach((doc) => {
-        //--get createName
-        // let createrName = doc.data().createrId;
-        // const q = query(userRef, where("uid", "==", createrName));
-        // const userDetails = getDoc(q, snapshot);
-        // console.log(userDetails);
-
-        projectArray.push({ ...doc.data(), id: doc.id });
+    const usersDetails = onSnapshot(collection(db, "users"), (snapshot) => {
+      snapshot.docs.forEach((uSnap) => {
+        usersArray[uSnap.data().uid] =
+          uSnap.data().firstName + " " + uSnap.data().lastName;
       });
-      setProjects(projectArray);
+    });
+    const q = query(
+      collection(db, "projects"),
+      orderBy("startDate", "desc"),
+      limit(3)
+    );
+    const projectssDetails = onSnapshot(q, (projSnaps) => {
+      projSnaps.docs.forEach((pSnap) => {
+        let createrName = usersArray[pSnap.data().createrId];
+        projectsArray.push({
+          ...pSnap.data(),
+          id: pSnap.id,
+          creater: createrName,
+        });
+      });
+      setProjects(projectsArray);
       setLoading(false);
-      console.log(projectArray);
-      projectArray = []; //reset userArray
+
+      projectsArray = []; //reset projectsArray
+      usersArray = []; //reset userArray
     });
   }, []);
-  //console.log(users);
   if (loading) {
     return (
       <div>
@@ -62,3 +67,60 @@ function GetAllProject() {
   );
 }
 export default GetAllProject;
+
+// //--- carosel - Not successful -map function attaching image just under one another or overlapping
+// <div
+// id="carouselExampleIndicators"
+// className="carousel slide"
+// data-bs-ride="carousel"
+// >
+// <div class="carousel-indicators">
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleIndicators"
+//     data-bs-slide-to="0"
+//     className="active"
+//     aria-current="true"
+//     aria-label="Slide 1"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleIndicators"
+//     data-bs-slide-to="1"
+//     aria-label="Slide 2"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleIndicators"
+//     data-bs-slide-to="2"
+//     aria-label="Slide 3"
+//   ></button>
+// </div>
+// <div className="carousel-inner">
+//   <div className="carousel-item active">
+//     {projects.map((p) => (
+//       <img src={p.image} className="d-block w-100" alt="project-image" />
+//       // <ProjectRow key={p.id} project={p} />
+//     ))}
+//   </div>
+// </div>
+// <button
+//   className="carousel-control-prev"
+//   type="button"
+//   data-bs-target="#carouselExampleIndicators"
+//   data-bs-slide="prev"
+// >
+//   <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+//   <span className="visually-hidden">Previous</span>
+// </button>
+// <button
+//   className="carousel-control-next"
+//   type="button"
+//   data-bs-target="#carouselExampleIndicators"
+//   data-bs-slide="next"
+// >
+//   <span className="carousel-control-next-icon" aria-hidden="true"></span>
+//   <span className="visually-hidden">Next</span>
+// </button>
+// </div>
+// //---

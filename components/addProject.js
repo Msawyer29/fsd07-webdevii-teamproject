@@ -95,7 +95,7 @@ const AddProject = () => {
     // //TODO Validation
   };
 
-  console.log(values);
+  //console.log(values);
 
   const addRowTable = (e) => {
     e.preventDefault();
