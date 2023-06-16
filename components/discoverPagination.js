@@ -32,7 +32,7 @@ function DiscoverPagination() {
         });
       });
       setProjects(projectsArray);
-      console.log(projectsArray);
+      //console.log(projectsArray);
       setLoading(false);
       projectsArray = []; //reset projectsArray
     });

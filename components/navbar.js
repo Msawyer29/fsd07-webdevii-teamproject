@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Login from "./login";
 import { getAuth, signOut } from "firebase/auth";
 import {
@@ -10,11 +10,15 @@ import {
   getDocs,
 } from "firebase/firestore";
 import Modal from "react-bootstrap/Modal";
-import Link from 'next/link';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const auth = getAuth();
 
 const Navbar = () => {
+  const sInput = useRef();
+  const router = useRouter();
+
   // onAuthStateChanged gets triggered every time there is a change in the authentication state
   // when a user logs in, it returns a User object, when a user logs out, it returns null - used to conditionally render our navbar links
 
@@ -70,6 +74,18 @@ const Navbar = () => {
       });
   };
 
+  const searchProjectWithKeyWord = () => {
+    let inputKeyWord = sInput.current.value;
+    if (inputKeyWord == "") {
+      alert("Provide key word for search");
+    } else {
+      //const navigate = useNavigate();
+      console.log(inputKeyWord);
+      router.push("/project/search/" + inputKeyWord);
+    }
+  };
+  //let inputKeyWord = searchInput.current.value;
+
   return (
     <nav className="container navBar egg dGreenBG d-flex align-items-center justify-content-between py-2">
       <div>
@@ -79,21 +95,21 @@ const Navbar = () => {
       </div>
 
       <div className="d-flex align-items-center me-3">
-      <div className="w-50">
-        <Link
-          href={currentUser ? "/add-project" : "/"} // Change the href based on currentUser state
-          className="nav-link"
-          onClick={(e) => {
-            // If user is not logged in, prevent navigation and show alert
-            if (!currentUser) {
-              e.preventDefault();
-              alert("You must be logged in to create a new project.");
-            }
-          }}
-        >
-          start a project
-        </Link>
-      </div>
+        <div className="w-50">
+          <Link
+            href={currentUser ? "/add-project" : "/"} // Change the href based on currentUser state
+            className="nav-link"
+            onClick={(e) => {
+              // If user is not logged in, prevent navigation and show alert
+              if (!currentUser) {
+                e.preventDefault();
+                alert("You must be logged in to create a new project.");
+              }
+            }}
+          >
+            start a project
+          </Link>
+        </div>
         <div className="input-group me-3">
           <input
             type="text"
@@ -101,11 +117,13 @@ const Navbar = () => {
             placeholder="search"
             aria-label="search"
             aria-describedby="button-addon2"
+            ref={sInput}
           />
           <button
             className="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
+            onClick={() => searchProjectWithKeyWord()}
           >
             find
           </button>
