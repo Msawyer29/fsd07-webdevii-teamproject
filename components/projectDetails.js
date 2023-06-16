@@ -13,7 +13,7 @@ import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
 
 const ProjectDetails = ({ pId }) => {
-  console.log(pId.projectId);
+  // console.log(pId.projectId);
   const [project, setProject] = useState([]);
   const [tiers, setTiers] = useState([]);
   //const [loading, setLoading] = useState(true);

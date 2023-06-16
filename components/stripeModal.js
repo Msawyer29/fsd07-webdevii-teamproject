@@ -23,7 +23,7 @@ const StripeModal = ({ pId }) => {
   const [paymentError, setPaymentError] = useState(null); // new state for payment error
   const [donorName, setDonorName] = useState(""); // new state for the donor name
   const modalRef = useRef(); // ref (modalRef) is created and attached to the modal's root div, see line 42
-  console.log(pId);
+  // console.log(pId);
   // console.log(pId.projectID);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const StripeModal = ({ pId }) => {
           console.log("Error getting documents: ", error);
         });
     }
-    console.log(donorName);
+    // console.log(donorName);
 
     const modalElement = modalRef.current;
 
@@ -117,7 +117,7 @@ const StripeModal = ({ pId }) => {
               <CheckoutForm
                 onPaymentSuccess={() => {
                   setPaymentSuccess(true);
-                  setPaymentError(null);  // Clear the error state
+                  setPaymentError(null); // Clear the error state
                 }}
                 onPaymentError={(error) => setPaymentError(error)} // pass functions, set setPaymentSuccess to true & to set paymentError
                 pId={pId}
