@@ -285,7 +285,7 @@ const AddProject = () => {
         </a>
       </form>
     </div>
-    <Footer />
+   
     </div>
   );
 };
