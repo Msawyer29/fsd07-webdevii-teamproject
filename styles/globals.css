@@ -174,7 +174,7 @@ a {
 }
 
 .shortDescription, .titleLimit {
-  max-height:50px;
+  height:50px;
   overflow-y: hidden;
   margin-bottom:0 !important;
   max-width: 225px;
