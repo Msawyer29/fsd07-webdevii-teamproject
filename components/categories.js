@@ -10,7 +10,7 @@ const Categories = () => {
       <ul id="categories" className="nav justify-content-center">
         <li className="nav-item">
           <a className="nav-link green" href="#">
-            documentary
+            film
           </a>
         </li>
         <li className="nav-item">
@@ -30,7 +30,7 @@ const Categories = () => {
         </li>
         <li className="nav-item">
           <a className="nav-link green" href="#">
-            lorem ipsum
+            technology
           </a>
         </li>
       </ul>

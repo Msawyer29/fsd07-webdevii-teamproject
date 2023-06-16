@@ -9,8 +9,8 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import Modal from 'react-bootstrap/Modal';
-
+import Modal from "react-bootstrap/Modal";
+import Link from 'next/link';
 
 const auth = getAuth();
 
@@ -77,12 +77,12 @@ const Navbar = () => {
           <img src="/assets/icons/logo.svg" alt="logo" id="logo" />
         </a>
       </div>
-  
+
       <div className="d-flex align-items-center me-3">
         <div className="w-50">
-          <a className="nav-link" href="#">
+          <Link href="/add-project" className="nav-link">
             start a project
-          </a>
+          </Link>
         </div>
         <div className="input-group me-3">
           <input
@@ -101,7 +101,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-  
+
       {currentUser ? (
         <a
           href="#"
@@ -140,7 +140,9 @@ const Navbar = () => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="loginLabel" style={{ color: "#000" }}>Login Form</Modal.Title>
+          <Modal.Title id="loginLabel" style={{ color: "#000" }}>
+            Login Form
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Login closeModal={() => setShowLogin(false)} />
@@ -148,6 +150,6 @@ const Navbar = () => {
       </Modal>
     </nav>
   );
-}
+};
 
 export default Navbar;
