@@ -96,16 +96,25 @@ const Comments = ({ projectId }) => {
       <div className="col-md-8 px-3">
       <div className="mb-5">
       <h5 className="egg mt-5">Join the conversation</h5>
-      <input
+      <hr className="grenn" />
+     
+        <textarea className="form-control mb-3" value={commentText}
+        onChange={(e) => setCommentText(e.target.value)}
+        placeholder="Write a comment..."
+        rows="3"></textarea>
+        <a className="myBtnEgg my-4" onClick={handleCommentPost}>Post Comment</a>
+        <div className="mt-5">
+        {comments.map((comment, index) => (
+        <Comment key={index} comment={comment} />
+      ))}
+      </div>
+      {/* <input
         type="text"
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         placeholder="Write a comment..."
-      />
-      <button onClick={handleCommentPost}>Post Comment</button>
-      {comments.map((comment, index) => (
-        <Comment key={index} comment={comment} />
-      ))}
+      /> */}
+      
       </div>
       </div>
     </div>

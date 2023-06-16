@@ -149,6 +149,8 @@ a {
   padding: 7px;
   font-family: "Archivo", sans-serif;
   text-transform: uppercase;
+  cursor: pointer;
+  
 }
 
 .myBtnEgg:hover {
