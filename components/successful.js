@@ -43,7 +43,7 @@ function Successful() {
         });
       });
       setProjects(projectsArray);
-      console.log(projectsArray);
+      // console.log(projectsArray);
       setLoading(false);
 
       projectsArray = []; //reset projectsArray
@@ -62,7 +62,6 @@ function Successful() {
 
   return (
     <div className="mb-5 mt-5">
-      
       <div className="row d-flex align-items-center justify-content-between mt-5">
         <div className="col-md-3">
           <h1 className="egg">
@@ -74,23 +73,22 @@ function Successful() {
           </h1>
         </div>
 
-
         {projects.map((p) => (
-        <div key={p.id} className="col-md-3 py-3">
-          <img
-            src={p.image}
-            className="img-fluid"
-            alt="..."
-          />
-          <div className="p-2 m-0 titleLink "><p className="shortTitle m-0"><a href="/single-project/[projectId]">{p.title}</a> </p><a className="dGreen" href={"/single-project/" + p.id}>
-                  read more &#8594;
-                </a></div>
-        </div>
+          <div key={p.id} className="col-md-3 py-3">
+            <img src={p.image} className="img-fluid" alt="..." />
+            <div className="p-2 m-0 titleLink ">
+              <p className="shortTitle m-0">
+                <a href="/single-project/[projectId]">{p.title}</a>{" "}
+              </p>
+              <a className="dGreen" href={"/single-project/" + p.id}>
+                read more &#8594;
+              </a>
+            </div>
+          </div>
         ))}
-
       </div>
     </div>
   );
-};
+}
 
 export default Successful;

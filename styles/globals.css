@@ -124,8 +124,8 @@ a {
 } */
 
 .form-control:focus {
-  border-color:#1a535c;
-  box-shadow:0 0 0 0.25rem rgba(78, 205, 196,.50);
+  border-color: #1a535c;
+  box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.5);
 }
 
 .form-control {
@@ -150,7 +150,6 @@ a {
   font-family: "Archivo", sans-serif;
   text-transform: uppercase;
   cursor: pointer;
-  
 }
 
 .myBtnEgg:hover {
@@ -168,15 +167,16 @@ a {
 }
 
 .projectDescription {
-  max-height:220px;
+  max-height: 220px;
   overflow-y: hidden;
-  margin-bottom:0 !important;
+  margin-bottom: 0 !important;
 }
 
-.shortDescription, .titleLimit {
-  height:50px;
+.shortDescription,
+.titleLimit {
+  height: 50px;
   overflow-y: hidden;
-  margin-bottom:0 !important;
+  margin-bottom: 0 !important;
   max-width: 225px;
 }
 
@@ -184,32 +184,32 @@ a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px; 
+  max-width: 200px;
 }
 
 .card {
-  width:95%;
+  width: 95%;
 
-  margin:3% 2.5% 3% 2.5%;
+  margin: 3% 2.5% 3% 2.5%;
   box-shadow: none;
-  transition: width  0.5s ease, box-shadow 0.5s ease, margin 0.5s ease, font-size 0.5s ease, background-color 0.75s ease;
+  transition: width 0.5s ease, box-shadow 0.5s ease, margin 0.5s ease,
+    font-size 0.5s ease, background-color 0.75s ease;
   /* font-size: 98%; */
   /* transition: box-shadow 0.5s; */
-  
 }
 
 .card:hover {
-  width:100%;
- 
-  margin:0;
+  width: 100%;
+
+  margin: 0;
   background-color: #4ecdc4 !important;
   /* font-size: 101%; */
-  -webkit-box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
--moz-box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
-box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
+  -webkit-box-shadow: 0px 0px 59px -13px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 59px -13px rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 59px -13px rgba(0, 0, 0, 1);
 }
 .card:hover p {
-  color:#f7fff7 !important;
+  color: #f7fff7 !important;
 }
 
 .titleLink {
@@ -219,7 +219,7 @@ box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
 }
 
 .titleLink:hover {
-  background-color:#4ecdc4 !important;
+  background-color: #4ecdc4 !important;
   color: #f7fff7 !important;
 }
 
@@ -230,20 +230,29 @@ box-shadow: 0px 0px 59px -13px rgba(0,0,0,1);
 .bigInput {
   font-family: "Archivo", sans-serif;
   font-weight: 700;
-  color:#1a535c;
+  color: #1a535c;
   border: none;
   /* font-size: 2em; */
   max-width: 100px;
   overflow-x: hidden;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   display: none;
 }
 
-input[type=number]:focus:focus-visible {
+input[type="number"]:focus:focus-visible {
   border-color: #1a535c !important;
+}
+
+.pagBtnDiv button {
+  color: #f7fff7;
+  background-color: #1a535c !important;
+  border: none;
+}
+.hideMe {
+  display: none;
 }
 
 /* file end */

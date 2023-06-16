@@ -8,16 +8,26 @@ import {
   query,
   limit,
   orderBy,
+  where,
 } from "firebase/firestore";
+import ProjectRow from "./projectRow";
+import ProjectDetails from "./projectDetails";
 
-function Discover({ pagination }) {
+function Discover() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const db = getFirestore(firebase_app);
 
+  // let usersArray = [];
   let projectsArray = [];
   //---------------------------------
   useEffect(() => {
+    // const usersDetails = onSnapshot(collection(db, "users"), (snapshot) => {
+    //   snapshot.docs.forEach((uSnap) => {
+    //     usersArray[uSnap.data().uid] =
+    //       uSnap.data().firstName + " " + uSnap.data().lastName;
+    //   });
+    // });
     const q = query(
       collection(db, "projects"),
       orderBy("startDate", "desc"),
@@ -25,6 +35,7 @@ function Discover({ pagination }) {
     );
     const projectssDetails = onSnapshot(q, (projSnaps) => {
       projSnaps.docs.forEach((pSnap) => {
+        // let createrName = usersArray[pSnap.data().createrId];
         projectsArray.push({
           ...pSnap.data(),
           id: pSnap.id,
