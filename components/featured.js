@@ -114,7 +114,7 @@ function FeaturedProject() {
                   <p className="green">[ ... ]</p>
                   <p className="egg fst-italic projectAuthor">by Mark Boone</p>
                   <h4>
-                    <a className="green" href="/single-project/{p.id}">
+                    <a className="green" href={"/single-project/" + p.id}>
                       read more &#8594;
                     </a>
                   </h4>
