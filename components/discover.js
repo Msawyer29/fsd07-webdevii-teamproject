@@ -82,7 +82,7 @@ function Discover() {
                 {p.description}
               </p>
               <h6 className="mt-2">
-                <a className="dGreen " href='/single-project/[projectId]'>
+                <a className="dGreen " href={"/single-project/" + p.id}>
                   read more &#8594;
                 </a>
               </h6>
