@@ -30,6 +30,16 @@ const Categories = () => {
         </li>
         <li className="nav-item">
           <a className="nav-link green" href="#">
+            art
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link green" href="#">
+            games
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link green" href="#">
             technology
           </a>
         </li>
