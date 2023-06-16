@@ -1,17 +1,15 @@
-const Comment = () => {
+const Comment = ({ comment }) => {
   return (
     <div>
-        <img
-                  src="/assets/images/avatar.jpg"
-                  className="avatar"
-                  alt="..."
-                />
-                <div className="ms-4">
-                <p className="green m-0">posted by <strong>John</strong> on <strong>12.03.2023</strong> @ <strong>12:45</strong></p>
-                <p className="egg">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
+      {/* <img src="/assets/images/avatar.jpg" className="avatar" alt="..." /> */}
+      <div className="ms-4">
+        <p className="green m-0">
+          posted by <strong>{`${comment.firstName} ${comment.lastName}`}</strong> on <strong>{new Date(comment.createdAt).toLocaleDateString()}</strong> @ <strong>{new Date(comment.createdAt).toLocaleTimeString()}</strong>
+        </p>
+        <p className="egg">{comment.text}</p>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

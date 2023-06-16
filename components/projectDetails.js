@@ -128,7 +128,7 @@ const ProjectDetails = ({ pId }) => {
           ))}
         </div>
       </div>
-      <Comments />
+      {project.id && <Comments projectId={project.id} />} {/* check in place so the Comments component will only be rendered when project.id has a valid value */}
     </div>
   );
 };
