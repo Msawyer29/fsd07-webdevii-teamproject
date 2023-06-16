@@ -8,9 +8,9 @@ const Footer = () => {
             </div>
             <div>
                 <span className="green me-3">Let's connect:</span>
-                <i class="fa-brands fa-facebook fa-lg me-3" style={{color: "#4ecdc4"}}></i>
-                <i class="fa-brands fa-instagram fa-lg me-3" style={{color: "#4ecdc4"}}></i>
-                <i class="fa-brands fa-twitter fa-lg me-3" style={{color: "#4ecdc4"}}></i>
+                <i className="fa-brands fa-facebook fa-lg me-3" style={{color: "#4ecdc4"}}></i>
+                <i className="fa-brands fa-instagram fa-lg me-3" style={{color: "#4ecdc4"}}></i>
+                <i className="fa-brands fa-twitter fa-lg me-3" style={{color: "#4ecdc4"}}></i>
             </div>
         </div>
         <hr className="green" />

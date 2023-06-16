@@ -150,16 +150,21 @@ const CheckoutForm = ({ onPaymentSuccess, onPaymentError, pId }) => {
   return (
     <div id="form">
       <form onSubmit={handleSubmit}>
-        <div style={{ textAlign: "center", padding: "10px 0", color: "black" }}>
-          <label>
+        <div className="d-flex justify-content-center align-items-center mb-5">
+          <div className="col-md-8">
+          <h4 className="dGreen m-0">
             Contribution Amount:
-            <input
+            </h4>
+            </div>
+            <div className="col-md-4">
+            <span className="h1 dGreen">$<input
+              className="bigInput"
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
-            />
-          </label>
+            /></span>
+          </div>
         </div>
         <CardElement />
         {errorMessage && <div className="error-message">{errorMessage}</div>}

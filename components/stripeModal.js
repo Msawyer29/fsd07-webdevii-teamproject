@@ -101,13 +101,13 @@ const StripeModal = ({ pId }) => {
             our creative vision to life.
           </p>
           {paymentSuccess && (
-            <div className="alert alert-success mt-3">
+            <div className="alert alert-success text-center mx-5 mt-3">
               Thank you! Your payment was completed successfully.
             </div>
           )}{" "}
           {/* display success alert when paymentSuccess is true */}
           {paymentError && (
-            <div className="alert alert-danger mt-3">{paymentError}</div>
+            <div className="alert alert-danger text-center mx-5 mt-3">{paymentError}</div>
           )}{" "}
           {/* display error alert when paymentError is set */}
           <div className="modal-body px-5">

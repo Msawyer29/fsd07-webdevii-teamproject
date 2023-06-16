@@ -12,6 +12,7 @@ import StripeModal from "./stripeModal";
 import ProjectDescription from "./projectDescription";
 import Comments from "./comments";
 
+
 const ProjectDetails = ({ pId }) => {
   // console.log(pId.projectId);
   const [project, setProject] = useState([]);
@@ -78,7 +79,7 @@ const ProjectDetails = ({ pId }) => {
         </div>
         <div className="col-md-4 px-3">
           <p className="text-uppercase egg">stats</p>
-          {/* <div
+          <div
             className="progress mb-3"
             role="progressbar"
             aria-label="5px high"
@@ -86,14 +87,8 @@ const ProjectDetails = ({ pId }) => {
             aria-valuemin="0"
             aria-valuemax="100"
           >
-            <div className="progress-bar greenBG"></div>
-          </div> */}
-          <progress
-            id="file"
-            value={project.contPercent}
-            max="100"
-            className=""
-          ></progress>
+            <div className="progress-bar greenBG" style={{ width: project.contPercent + '%' }}></div>
+          </div>
           <h1 className="egg slim mb-0">
             $<span id="funds">{project.contributionSum}</span>
           </h1>
@@ -113,19 +108,25 @@ const ProjectDetails = ({ pId }) => {
           </h1>
           <p className="green mt-0 mb-5">days left</p>
 
-          <StripeModalButton />
+          
           {/* Now we are checking if project.id exists before rendering StripeModal. This change ensures that the project's ID is correctly 
           stored in the project state object and that StripeModal receives the project's ID as a prop. The reason we need to make sure project.id 
           exists before rendering StripeModal is that React will initially render the component before the useEffect fetches the project data, causing 
           the prop to be undefined. This condition will ensure that StripeModal is only rendered once the project data is fetched and project.id is defined. */}
           {project.id && <StripeModal pId={project.id} />}
-
+          <hr className="green mt-5" />
+          <h3>Tiers and rewards</h3>
+          <hr className="green" />
           {tiers.map((t, index) => (
-            <div key={index} className="mt-2 text-center">
-              <p>{t.minContribution}</p>
-              <p>{t.reward}</p>
+            <div key={index} className="mt-2">
+              <p className="m-0 text-uppercase green">contribution</p>
+              <h1>${t.minContribution}</h1>
+              <p className="m-0 text-uppercase green">reward</p>
+              <h6>{t.reward}</h6>
+              <hr className="green" />
             </div>
           ))}
+          <StripeModalButton />
         </div>
       </div>
       {project.id && <Comments projectId={project.id} />} {/* check in place so the Comments component will only be rendered when project.id has a valid value */}
