@@ -10,7 +10,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 
-function Discover() {
+function Discover({ pagination }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const db = getFirestore(firebase_app);

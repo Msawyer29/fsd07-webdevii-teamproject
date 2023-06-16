@@ -10,7 +10,7 @@ const SingleProject = ({ params }) => {
       <CategorySearch category={params} />
       {/* <ProjectDetails pId={params} /> */}
       <SignUp />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
