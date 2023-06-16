@@ -11,35 +11,50 @@ import {
   where,
 } from "firebase/firestore";
 
+// functional component called CategorySearch, which receives a 'category' prop, this prop is passed from the parent component navbar.js
 function CategorySearch({ category }) {
+  // Initialize state variables for storing the fetched projects and the loading state.
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // get the firestore database instance from the firebase app
   const db = getFirestore(firebase_app);
 
   let projectsArray = [];
-  //---------------------------------
+
+  // the if statement checks if the category prop is not undefined
   if (category != undefined) {
+    // store the category
     let catg = category.category;
+    
+    // inside the useEffect hook, a query is made to the 'projects' collection in firestore to fetch projects with the given category
     useEffect(() => {
       const q = query(
         collection(db, "projects"),
         where("category", "==", catg)
       );
-      // const pq = query(colRef, where("email", "==", "arjun.nbsm@yahoo.com"));
+      
+      // the onSnapshot function is an event listener that listens for data changes in real-time
       const projectssDetails = onSnapshot(q, (projSnaps) => {
-        console.log("I am here");
+        // the forEach loop iterates through the snapshot of the data returned by the observer
         projSnaps.docs.forEach((pSnap) => {
-          console.log(pSnap.data());
+          // the project data is pushed into the projectsArray
           projectsArray.push({
             ...pSnap.data(),
             id: pSnap.id,
           });
         });
+        
+        // the state variables are then updated with the new data
         setProjects(projectsArray);
         setLoading(false);
-        projectsArray = []; //reset projectsArray
+        
+        // the projectsArray is reset for the next potential render.
+        projectsArray = [];
       });
-    }, []);
+    }, []); // the empty dependency array ensures this useEffect runs only once when the component is first rendered
+
+    // if the data is still loading, display a loading spinner
     if (loading) {
       return (
         <div>
@@ -50,6 +65,7 @@ function CategorySearch({ category }) {
       );
     }
 
+    // if the loading is complete, display the projects fetched from the database
     return (
       <div className="">
         <hr className="green" />
