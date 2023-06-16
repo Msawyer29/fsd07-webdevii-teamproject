@@ -161,7 +161,7 @@ const SignUp = () => {
           <span name="errorMsgRegister" className="errorMsg"></span>
           <span name="successMsgRegister" className="successMsg"></span>
           <br />
-          <button className="btn btn-primary my-2">Submit</button>
+          <button className="myBtnGreen my-2">Submit</button>
         </div>
       </form>
       </div>

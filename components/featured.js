@@ -62,7 +62,7 @@ function FeaturedProject() {
   }
 
   return (
-    <div>
+    <div className="py-3 over">
       <div
         id="featuredIndicators"
         className="carousel slide py-3"

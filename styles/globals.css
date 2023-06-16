@@ -157,6 +157,24 @@ a {
   color: #1a535c;
 }
 
+.myBtnGreen {
+  border: 2px solid;
+  transition: all 0.5s;
+  transition-timing-function: ease-out;
+  border-color: #1a535c;
+  background-color: none;
+  color: #1a535c;
+  padding: 7px;
+  font-family: "Archivo", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.myBtnGreen:hover {
+  background-color: #1a535c;
+  color: #f7fff7;
+}
+
 .avatar {
   max-width: 50px;
   border-radius: 50%;
@@ -255,4 +273,8 @@ input[type="number"]:focus:focus-visible {
   display: none;
 }
 
+.over {
+  overflow-y: hidden;
+  max-height: 600px;
+}
 /* file end */

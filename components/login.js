@@ -71,7 +71,7 @@ const Login = ({ closeModal }) => { // add closeModal as a prop
           value={values.password}
           onChange={onChange}
         />
-        <button className="btn btn-primary my-2">Login</button>
+        <button className="myBtnGreen my-2">Login</button>
       </form>
     </div>
   );
