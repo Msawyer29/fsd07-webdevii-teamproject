@@ -31,7 +31,7 @@ function Discover() {
     const q = query(
       collection(db, "projects"),
       orderBy("startDate", "desc"),
-      limit(3)
+      limit(4)
     );
     const projectssDetails = onSnapshot(q, (projSnaps) => {
       projSnaps.docs.forEach((pSnap) => {
