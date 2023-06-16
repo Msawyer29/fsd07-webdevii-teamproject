@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import React, { useState, useEffect } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const StripeModalButton = () => {
   const [user, setUser] = useState(null); // State for user authentication status
@@ -18,7 +18,9 @@ const StripeModalButton = () => {
   const handleClick = (e) => {
     // If user is not logged in, show an alert
     if (!user) {
-      alert('You must be a registered user to make a contribution to a project.');
+      alert(
+        "You must be a registered user to make a contribution to a project."
+      );
     }
   };
 
@@ -27,7 +29,10 @@ const StripeModalButton = () => {
       href="#"
       className="myBtnEgg"
       onClick={handleClick} // Add click handler
-      {...(user && { "data-bs-toggle": "modal", "data-bs-target": "#stripePay" })}
+      {...(user && {
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#stripePay",
+      })}
     >
       back this project
     </a>

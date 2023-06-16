@@ -13,7 +13,7 @@ import {
 import ProjectRow from "./projectRow";
 import ProjectDetails from "./projectDetails";
 
-function GetAllProject() {
+function FeaturedProject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const db = getFirestore(firebase_app);
@@ -61,20 +61,18 @@ function GetAllProject() {
   }
 
   return (
-    // <div>
-    //   {projects.map((p) => (
-    //     <ProjectRow key={p.id} project={p} />
-    //   ))}
-    // </div>
+    <div>
+      
     <div
-      id="carouselExampleIndicators"
-      className="carousel slide"
+      id="featuredIndicators"
+      className="carousel slide py-3"
       data-bs-ride="carousel"
     >
+      <h6 className="egg text-uppercase m-0">featured projects</h6>
       <div className="carousel-indicators">
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target="#featuredIndicators"
           data-bs-slide-to="0"
           className="active"
           aria-current="true"
@@ -82,131 +80,52 @@ function GetAllProject() {
         ></button>
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target="#featuredIndicators"
           data-bs-slide-to="1"
           aria-label="Slide 2"
         ></button>
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target="#featuredIndicators"
           data-bs-slide-to="2"
           aria-label="Slide 3"
         ></button>
       </div>
-      <div className="carousel-inner">
+      <div className="carousel-inner ">
         {projects.map((p) => (
-          <div
-            key={p.id}
-            className={
-              projects[0].id == p.id ? "carousel-item active" : "carousel-item"
-            }
-          >
-            <div className="">
-              <img
-                src={p.image}
-                className="d-block w-100"
-                alt="project-image"
-              />
-              <div>
-                <h4>
-                  <a
-                    className="green"
-                    href={"/single-project/" + p.id}
-                    // onClick={(e) => getCreaterProfile({ projectID }, e)}
-                  >
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; read more &#8594;
-                  </a>
-                </h4>
-              </div>
-            </div>
-          </div>
+           <div key={p.id} className={projects[0].id == p.id ? "carousel-item active" : "carousel-item"}>
+           <div className="row d-flex">
+             <div className="col-md-8 px-3">
+               <img
+                 src={p.image}
+                 className="img-fluid"
+                 alt="..."
+               />
+             </div>
+             <div className="col-md-4 px-3">
+               <h2 className="egg projectTitle text-capitalize">
+                 {p.title}
+               </h2>
+
+               <p className="green projectDescription">
+                 {p.description}
+               </p>
+               <p className="green">[ ... ]</p>
+               <p className="egg fst-italic projectAuthor">by Mark Boone</p>
+               <h4>
+                 <a className="green" href={/single-project/{p.id}}>
+                   read more &#8594;
+                 </a>
+               </h4>
+             </div>
+           </div>
+         </div>
         ))}
       </div>
-      <button
-        className="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button
-        className="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </button>
+    
+      <div className="spacer"></div>
+    </div>
     </div>
   );
 }
-export default GetAllProject;
-
-// --- For Silviya --- the above return statement need to replace by following is the code for carosel
-/* 
-  <div
-id="carouselExampleIndicators"
-className="carousel slide"
-data-bs-ride="carousel"
->
-<div class="carousel-indicators">
-  <button
-    type="button"
-    data-bs-target="#carouselExampleIndicators"
-    data-bs-slide-to="0"
-    className="active"
-    aria-current="true"
-    aria-label="Slide 1"
-  ></button>
-  <button
-    type="button"
-    data-bs-target="#carouselExampleIndicators"
-    data-bs-slide-to="1"
-    aria-label="Slide 2"
-  ></button>
-  <button
-    type="button"
-    data-bs-target="#carouselExampleIndicators"
-    data-bs-slide-to="2"
-    aria-label="Slide 3"
-  ></button>
-</div>
-<div className="carousel-inner">
-  
-    {projects.map((p) => (
-      <div className="carousel-item active">
-      <img src={p.image} className="d-block w-100" alt="project-image" />
-      // <ProjectRow key={p.id} project={p} />
-      </div>
-    ))}
-  
-</div>
-<button
-  className="carousel-control-prev"
-  type="button"
-  data-bs-target="#carouselExampleIndicators"
-  data-bs-slide="prev"
->
-  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span className="visually-hidden">Previous</span>
-</button>
-<button
-  className="carousel-control-next"
-  type="button"
-  data-bs-target="#carouselExampleIndicators"
-  data-bs-slide="next"
->
-  <span className="carousel-control-next-icon" aria-hidden="true"></span>
-  <span className="visually-hidden">Next</span>
-</button>
-</div> 
-
-*/
-
-// //---
-
+export default FeaturedProject;
