@@ -1,4 +1,4 @@
-"use client"
+"use client" // needed because the user provides the search input
 // import the necessary modules and components
 import React, { useEffect, useState } from "react";
 import firebase_app from "../firebase/config";
