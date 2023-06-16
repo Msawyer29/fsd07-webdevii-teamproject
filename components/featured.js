@@ -35,13 +35,6 @@ function FeaturedProject() {
     );
     const projectssDetails = onSnapshot(q, (projSnaps) => {
       projSnaps.docs.forEach((pSnap) => {
-
-    
-
-
-
-
-
         let createrName = usersArray[pSnap.data().createrId];
         projectsArray.push({
           ...pSnap.data(),
@@ -51,12 +44,10 @@ function FeaturedProject() {
       });
       setProjects(projectsArray);
       console.log(projectsArray);
-      
+
       setLoading(false);
       projectsArray = []; //reset projectsArray
       usersArray = []; //reset userArray
-
-      
     });
   }, []);
 

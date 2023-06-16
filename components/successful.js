@@ -82,7 +82,7 @@ function Successful() {
             className="img-fluid"
             alt="..."
           />
-          <div className="p-2 m-0 titleLink "><p className="shortTitle m-0"><a href="/single-project/[projectId]">{p.title}</a> </p><a className="dGreen" href='/single-project/[projectId]'>
+          <div className="p-2 m-0 titleLink "><p className="shortTitle m-0"><a href="/single-project/[projectId]">{p.title}</a> </p><a className="dGreen" href={"/single-project/" + p.id}>
                   read more &#8594;
                 </a></div>
         </div>
