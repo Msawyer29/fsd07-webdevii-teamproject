@@ -1,6 +1,8 @@
 import Categories from "@components/categories";
 import ProjectDetails from "@components/projectDetails";
 import GetUserByEmail from "@components/getUserByEmail";
+import SignUp from "@components/signUpNew";
+import Footer from "@components/footer";
 const SingleProject = ({ params }) => {
   return (
     <div className="container px-5">
@@ -8,6 +10,8 @@ const SingleProject = ({ params }) => {
        <GetUserByEmail /> */}
       <Categories />
       <ProjectDetails pId={params} />
+      <SignUp />
+    <Footer />
     </div>
   );
 };
