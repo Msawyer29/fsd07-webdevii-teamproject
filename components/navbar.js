@@ -79,11 +79,21 @@ const Navbar = () => {
       </div>
 
       <div className="d-flex align-items-center me-3">
-        <div className="w-50">
-          <Link href="/add-project" className="nav-link">
-            start a project
-          </Link>
-        </div>
+      <div className="w-50">
+        <Link
+          href={currentUser ? "/add-project" : "/"} // Change the href based on currentUser state
+          className="nav-link"
+          onClick={(e) => {
+            // If user is not logged in, prevent navigation and show alert
+            if (!currentUser) {
+              e.preventDefault();
+              alert("You must be logged in to create a new project.");
+            }
+          }}
+        >
+          start a project
+        </Link>
+      </div>
         <div className="input-group me-3">
           <input
             type="text"
